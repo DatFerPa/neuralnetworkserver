@@ -7,7 +7,7 @@ def hello_world():
 
 @app.route('/hasfallen/', methods=['POST'])
 def has_fallen():
-    print(request.args.get('accel'))
+    print(request.form.get('accel'))
     return 'callo'
 
 
