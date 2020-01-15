@@ -5,9 +5,10 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/hasfallen/', methods=['POST'])
+@app.route('/hasfallen/', methods=['GET', 'POST'])
 def has_fallen():
-    print(request.form.get('accel'))
+    accel = request.args.get('accel')
+    print(accel)
     return 'callo'
 
 
