@@ -7,7 +7,7 @@ def hello_world():
 
 @app.route('/hasfallen/', methods=['GET'])
 def has_fallen():
-    print(requests.args.get('accel'))
+    print(request.args.get('accel'))
     return 'callo'
 
 
