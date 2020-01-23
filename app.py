@@ -28,9 +28,9 @@ def has_fallen():
     prediccion = modelo.predict(numpy_lista)
     print(np.argmax(prediccion[0]))
 
-    prediccion = modelo.predict()
+    prediccion = np.argmax(prediccion[0])
 
-    return 'caida_si'
+    return prediccion
 
 
 
