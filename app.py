@@ -30,7 +30,7 @@ def has_fallen():
 
     prediccion = np.argmax(prediccion[0])
 
-    return prediccion
+    return 0
 
 
 
