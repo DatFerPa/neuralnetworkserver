@@ -9,7 +9,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/hasfallen/', methods=['GET', 'POST'])
+@app.route('/hasfallen/', methods=['GET'])
 def has_fallen():
     accel = request.args.get('accel')
 
