@@ -12,7 +12,7 @@ def hello_world():
 @app.route('/hasfallen/', methods=['POST'])
 def has_fallen():
     accel = request.args.get('accel')
-
+    print(accel)
     return accel
 
     """
