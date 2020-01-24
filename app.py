@@ -13,7 +13,7 @@ def hello_world():
 def has_fallen():
     accel = request.args.get('accel')
 
-    return lista_accel
+    return accel
 
     """
     corte_1 = accel.split(":")
