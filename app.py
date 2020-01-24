@@ -11,7 +11,7 @@ def hello_world():
 
 @app.route('/hasfallen/', methods=['POST'])
 def has_fallen():
-    accel = request.args.get('accel')
+    accel = request.form.get('accel')
     print(accel)
     return accel
 
