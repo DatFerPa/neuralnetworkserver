@@ -12,6 +12,10 @@ def hello_world():
 @app.route('/hasfallen/', methods=['GET', 'POST'])
 def has_fallen():
     accel = request.args.get('accel')
+
+    return lista_accel
+
+    """
     corte_1 = accel.split(":")
     lista_accel = []
     for x in corte_1:
@@ -31,7 +35,7 @@ def has_fallen():
     prediccion = np.argmax(prediccion[0])
 
     return 0
-
+    """
 
 
 if __name__ == '__main__':
