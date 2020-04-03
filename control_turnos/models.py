@@ -1,4 +1,4 @@
-from .extension import db
+from .extensions import db
 
 turnos = db.Table('turnos',
 db.Column('maquinista_id',db.Integer,db.ForeignKey('maquinista.id'),primary_key=True),

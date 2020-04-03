@@ -1,7 +1,7 @@
 from flask import Flask
 
 from .commands import create_tables
-from .extension import db
+from .extensions import db
 
 
 
