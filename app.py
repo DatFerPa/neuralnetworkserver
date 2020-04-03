@@ -1,4 +1,4 @@
-from flask_qa import create_app
+from control_turnos import create_app
 
 
 app = create_app()
