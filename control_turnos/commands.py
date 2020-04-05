@@ -20,7 +20,7 @@ def drop_tables():
 def generate_data():
     turno1 = Turno(nombre_t="turno dia", maquina="mc 102023")
     turno2 = Turno(nombre_t="turno noche", maquina="23-405-5")
-    turno3 = Turno(nombre_t="turno de explotacion",mquina="455-345-567")
+    turno3 = Turno(nombre_t="turno de explotacion",maquina="455-345-567")
     maq1 = Maquinista(nombre_m="Fer")
     maq2 = Maquinista(nombre_m="Fernando")
     maq1.turnos.append(turno1)
