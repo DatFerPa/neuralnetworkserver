@@ -9,3 +9,14 @@ from .models import Maquinista, Turno
 @with_appcontext
 def create_tables():
     db.create_all()
+
+@click.command(name='drop_tables')
+@with_appcontext
+def drop_tables():
+    db.drop_all()
+
+@click.command(name='generate_data')
+@with_appcontext
+def generate_data():
+    #insertar datos para la bbdd
+    a=1
