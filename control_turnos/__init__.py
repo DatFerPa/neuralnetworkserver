@@ -1,6 +1,6 @@
 from flask import Flask
 
-from .commands import create_tables
+from .commands import create_tables, drop_tables, generate_data
 from .extensions import db
 
 
