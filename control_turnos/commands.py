@@ -14,9 +14,3 @@ def create_tables():
 @with_appcontext
 def drop_tables():
     db.drop_all()
-
-@click.command(name='generate_data')
-@with_appcontext
-def generate_data():
-    #insertar datos para la bbdd
-    a=1
