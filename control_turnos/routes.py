@@ -9,5 +9,10 @@ main = BLueprint('main',__name__)
 def principal():
     return render_template('principal.html')
 
-@main.route('')
+@main.route('/login/',methods=['POST'])
 def login():
+    nombre = request.args.get('nombre')
+
+
+
+    
