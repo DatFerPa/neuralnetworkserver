@@ -1,4 +1,4 @@
-from flask import Blueprints, render_template
+from flask import Blueprint, render_template
 
 from .extensions import db
 from .models import User, Turno
