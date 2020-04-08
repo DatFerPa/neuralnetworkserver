@@ -1,4 +1,4 @@
-from flask import BLueprints, render_template
+from flask import Blueprints, render_template
 
 from .extensions import db
 from .models import User, Turno
@@ -12,7 +12,3 @@ def principal():
 @main.route('/login/',methods=['POST'])
 def login():
     nombre = request.args.get('nombre')
-
-
-
-    

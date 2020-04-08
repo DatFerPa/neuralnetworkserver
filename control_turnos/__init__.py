@@ -13,6 +13,7 @@ def create_app(config_file='settings.py'):
     db.init_app(app)
 
     app.register_blueprint(main)
+
     app.cli.add_command(create_tables)
     app.cli.add_command(drop_tables)
     app.cli.add_command(generate_data)
