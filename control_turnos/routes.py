@@ -3,7 +3,7 @@ from flask import Blueprint, render_template
 from .extensions import db
 from .models import Maquinista, Turno
 
-main = BLueprint('main',__name__)
+main = Blueprint('main',__name__)
 
 @main.route('/')
 def principal():
