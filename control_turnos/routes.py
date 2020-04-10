@@ -19,7 +19,7 @@ def login():
         return 'si'
 
 @main.route('/turnos/',methods=['POST'])
-def login():
+def turnos():
     nombre = request.args.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     turnos_union = turnos.query.filter_by(maquinista_id=maquinista.id).all()
