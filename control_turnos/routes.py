@@ -12,6 +12,7 @@ def principal():
 @main.route('/login/',methods=['POST'])
 def login():
     nombre = request.args.get('nombre')
+    print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
         return 'no'
@@ -21,8 +22,8 @@ def login():
 @main.route('/turnos/',methods=['POST'])
 def turnos():
     nombre = request.args.get('nombre')
-    maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
-    turnos_union = turnos.query.filter_by(maquinista_id=maquinista.id).all()
+    maquinista = Maquinista.query.filter(Maquinista.nombre_m==nombre).first()
+    turnos_union = turnos.query.filter(turnos.maquinista_id==maquinista.id).all()
     turnos_de_un_maquinista = []
 
     for turn in turnos_union:
