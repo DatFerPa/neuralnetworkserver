@@ -28,7 +28,7 @@ def turnos():
     turnos_de_un_maquinista = []
     print(maquinista.turnos)
     for turn in maquinista.turnos:
-        turno_actual = Turno.query.filter_by(id=turn.turno_id).first()
+        turno_actual = Turno.query.filter_by(id=turn.id).first()
         turnos_de_un_maquinista.append(turno_actual)
 
     concatenacion_turnos=""
