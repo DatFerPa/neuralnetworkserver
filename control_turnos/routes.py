@@ -24,7 +24,7 @@ def turnos():
     nombre = request.args.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     #turnos_union = turnos.query.filter_by(maquinista_id=maquinista.id).all()
-    turnos_union = db.session.query(turnos).filter_by().all(turnos.maquinista_id==maquinista.id).all()
+    turnos_union = db.session.query(turnos).filter(turnos.maquinista_id==maquinista.id).all()
     turnos_de_un_maquinista = []
 
     for turn in turnos_union:
