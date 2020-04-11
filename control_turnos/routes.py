@@ -11,7 +11,7 @@ def principal():
 
 @main.route('/login/',methods=['POST'])
 def login():
-    nombre = request.args.get('nombre')
+    nombre = request.form.get('nombre')
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
@@ -21,7 +21,7 @@ def login():
 
 @main.route('/turnos/',methods=['POST'])
 def turnos():
-    nombre = request.args.get('nombre')
+    nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
 
     turnos_de_un_maquinista = []
