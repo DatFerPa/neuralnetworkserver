@@ -14,6 +14,7 @@ def login():
     nombre = request.form.get('nombre')
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
+    print(maquinista)
     if maquinista is None:
         return 'no'
     else:
@@ -23,7 +24,7 @@ def login():
 def turnos():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
-
+    print(maquinista)
     turnos_de_un_maquinista = []
     print(maquinista.turnos)
     for turn in maquinista.turnos:
