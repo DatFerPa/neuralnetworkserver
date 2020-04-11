@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 
 from .extensions import db
-from .models import Maquinista, Turno, turnos
+from .models import Maquinista, Turno, turnos, Session
 
 main = Blueprint('main',__name__)
 
