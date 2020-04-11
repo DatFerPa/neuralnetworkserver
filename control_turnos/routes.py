@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 
 from .extensions import db
-from .models import Maquinista, Turno, turnos, Session
+from .models import Maquinista, Turno, turnos
 
 main = Blueprint('main',__name__)
 
@@ -24,7 +24,7 @@ def turnos():
     nombre = request.args.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     #turnos_union = turnos.query.filter_by(maquinista_id=maquinista.id).all()
-    turnos_union = Session.query(turnos).filter(turnos.c.maquinista_id == maquinista.id).all()
+    turnos_union = db.session.query(turnos).filter_by().all(turnos.maquinista_id==maquinista.id).all()
     turnos_de_un_maquinista = []
 
     for turn in turnos_union:
