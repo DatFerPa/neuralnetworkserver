@@ -32,11 +32,11 @@ def turnos():
         turnos_de_un_maquinista.append(turno_actual)
 
     concatenacion_turnos=""
-    iteracion = len(turnos_de_un_maquinista) - 1
+    iteracion = len(turnos_de_un_maquinista)
 
     for n in range(iteracion):
         concatenacion_turnos = concatenacion_turnos + turnos_de_un_maquinista[n].nombre_t + ";" + turnos_de_un_maquinista[n].maquina
-        if n != iteracion:
+        if n != (iteracion-1):
             concatenacion_turnos = concatenacion_turnos + ":"
 
     return concatenacion_turnos
