@@ -44,6 +44,7 @@ def turnos():
 @main.route('/listTurnos/',methods=['POST'])
 def listTurnos():
     nombre = request.form.get('nombre')
+    print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
         return render_template('principal.html')
