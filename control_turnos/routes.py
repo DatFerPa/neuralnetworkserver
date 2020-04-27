@@ -49,7 +49,7 @@ def listTurnos():
     if maquinista is None:
 
         subcontext = {
-            "respuesta"="Fallo"
+            "respuesta":"Fallo"
         }
         return redirect(url_for('main.principal'),**subcontext)
 
