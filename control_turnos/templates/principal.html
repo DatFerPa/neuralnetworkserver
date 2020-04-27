@@ -5,7 +5,13 @@
     <title>Principal</title>
   </head>
   <body>
-    <form method="POST" action="{{ url_for('main.listTurnos')}}">
+
+    {% if respuesta == 'Fallo'%}
+      <p style="color:red">
+        Nombre de maquinista erroneo
+      </p><br />
+    {% end %}
+    <form method="POST" action="{{ url_for('main.listTurnos') }}">
       <label for="textMaquinista">Nombre del maquinista:</label><br />
       <input id="nombre" name="nombre" type="text" /><br />
       <input type="submit" value="Buscar" />

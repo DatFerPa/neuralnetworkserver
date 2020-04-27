@@ -47,7 +47,11 @@ def listTurnos():
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return render_template('principal.html')
+
+        subcontext = {
+            "respuesta"="Fallo"
+        }
+        return redirect(url_for('main.principal'),**subcontext)
 
     turnos = []
     for turn in maquinista.turnos:
