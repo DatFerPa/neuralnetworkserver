@@ -76,8 +76,10 @@ def listTurnos():
 @main.route('/ficherosTurno/')
 def ficherosTurno():
     print("ficherosTurno")
-    maquinista = request.args.get('maquinista_arg')
-    turno_act = request.args.get('turno_arg')
+    maquinistaID = request.args.get('maquinista_arg')
+    turno_actID = request.args.get('turno_arg')
+    maquinista = Maquinista.query.filter_by(id=maquinistaID).first()
+    turno_act = Turno.query.filter_by(id=turno_actID).first()
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
