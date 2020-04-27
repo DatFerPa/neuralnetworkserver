@@ -41,7 +41,7 @@ def turnos():
 
     return concatenacion_turnos
 
-@main.rout('/listTurnos/',methods=['POST'])
+@main.route('/listTurnos/',methods=['POST'])
 def listTurnos():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
@@ -61,7 +61,7 @@ def listTurnos():
     return render_template('listTurnos.html',**context)
 
 #llegarr a este a traes de un url_for, y meter parametros en la funcion
-@main.rout('/logsTurno/')
+@main.route('/logsTurno/')
 def logsTurno(maquinista_arg,turno_arg):
 
     context ={
@@ -72,7 +72,7 @@ def logsTurno(maquinista_arg,turno_arg):
 
 
 
-@main.rout('/addLogTurno/',methods=['POST'])
+@main.route('/addLogTurno/',methods=['POST'])
 def addLogTurno():
 
     return "si"
