@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from .extensions import db
 from .models import Maquinista, Turno, turnos
-import os, glob
+import glob
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -75,16 +75,25 @@ def listTurnos():
 #llegarr a este a traes de un url_for, y meter parametros en la funcion
 @main.route('/ficherosTurno/')
 def ficherosTurno():
-    print("logsTurno")
-    print(request.args.get('maquinista_arg'))
-    context ={
+    print("ficherosTurno")
+    maquinista = request.args.get('maquinista_arg')
+    turno_act = request.args.get('turno_arg')
+    print(maquinista.nombre_m)
+    print(turno_act.nombre_t)
+
+    for name in glob.glob('logturnos/*'+maquinista.nombre_m+'*'+turno_act.nombre_t+'*'):
+
+    context = {
 
     }
+
 
     return render_template('ficherosTurno.html',**context)
 
 @main.route('/logsTurno/')
 def logsTurno():
+    print("logsTurno")
+
     context = {
 
     }
