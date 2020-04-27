@@ -7,7 +7,7 @@
   <body>
     <ul>
       {% for turno in turnos %}
-        <li> <a href="{{ url_for('logsTurno',maquinista_arg=maquinista,turno_arg=turno) }}"> {{ turno.nombre_t} } </a>  </li>
+        <li> <a href="{{ url_for('main.logsTurno',maquinista_arg=maquinista,turno_arg=turno) }}"> {{ turno.nombre_t} } </a>  </li>
       {% endfor %}
     </ul>
   </body>
