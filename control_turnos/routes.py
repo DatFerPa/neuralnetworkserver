@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 
 from .extensions import db
 from .models import Maquinista, Turno, turnos
