@@ -6,15 +6,9 @@ import os, glob
 main = Blueprint('main',__name__)
 
 @main.route('/')
-def principal(error):
-    context = {
-        'error':False
-    }
-    if error:
-        context = {
-            'error':True
-        }
-    return render_template('principal.html',**context)
+def principal():
+    print("Principal")
+    return render_template('principal.html')
 
 @main.route('/login/',methods=['POST'])
 def login():
@@ -50,12 +44,15 @@ def turnos():
 
 @main.route('/listTurnos/',methods=['POST'])
 def listTurnos():
+    print("listTurnos")
     nombre = request.form.get('nombre')
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-
-        return redirect(url_for('main.principal',error=True))
+        subcontext = {
+            "error":True
+        }
+        return redirect(url_for('main.principal',**subcontext))
 
     turnos = []
     for turn in maquinista.turnos:
@@ -72,11 +69,11 @@ def listTurnos():
 #llegarr a este a traes de un url_for, y meter parametros en la funcion
 @main.route('/logsTurno/')
 def logsTurno(maquinista_arg,turno_arg):
+    print("logsTurno")
 
     context ={
 
     }
-
     return render_template('logsTurno.html',**context)
 
 
