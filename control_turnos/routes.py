@@ -83,7 +83,7 @@ def ficherosTurno():
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
-    for name in glob.glob('logturnos/*'+maquinista.nombre_m+'*'+turno_act.nombre_t+'*'):
+    for name in glob.glob('logturnos/*'+maquinista.nombre_m+turno_act.nombre_t+'*'):
         print(name)
 
     context = {
