@@ -73,16 +73,27 @@ def listTurnos():
     return render_template('listTurnos.html',**context)
 
 #llegarr a este a traes de un url_for, y meter parametros en la funcion
-@main.route('/logsTurno/')
-def logsTurno(maquinista_arg,turno_arg):
+@main.route('/ficherosTurno/<Maquinista:maquinista_arg>/<Turno:turno_arg>')
+def ficherosTurno(maquinista_arg,turno_arg):
     print("logsTurno")
+    print(maquinista_arg)
+    print(turno_arg)
+
 
     context ={
+        "turno":turno_arg,
+        "maquinista":maquinista_arg
+    }
+
+    return render_template('ficherosTurno.html',**context)
+
+@main.route('/logsTurno/')
+def logsTurno():
+    context = {
 
     }
-    return render_template('logsTurno.html',**context)
 
-
+    return render_template('logsTurno.html')
 
 @main.route('/addLogTurno/',methods=['POST'])
 def addLogTurno():
