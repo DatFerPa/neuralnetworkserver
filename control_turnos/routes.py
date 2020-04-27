@@ -83,8 +83,8 @@ def ficherosTurno():
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
-    listFicheros = os.listdir("/.")
-    print(os.path.abspath(os.getcwd()))
+    listFicheros = os.listdir(os.path.abspath(os.getcwd())+"/logturnos")
+    print(listFicheros)
     context = {
         'valor':1
     }
