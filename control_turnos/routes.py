@@ -6,14 +6,17 @@ import os, glob
 main = Blueprint('main',__name__)
 
 @main.route('/')
-def principal(error_maquinista=False):
+def principal():
     print("Principal")
-    print(error_maquinista)
-    context ={"error_maquinista":False}
+    context = {
+        error_maquinista=False
+    }
+    if request.args.get('error_maquinista') is not None:
+        context = {
+            error_maquinista=True
+        }
 
-    if error_maquinista :
-        context["error_maquinista"]=True
-
+    print(context)
     return render_template('principal.html',**context)
 
 @main.route('/login/',methods=['POST'])
