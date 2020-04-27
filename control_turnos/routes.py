@@ -84,7 +84,7 @@ def ficherosTurno():
     print(turno_act.nombre_t)
 
     listFicheros = os.listdir("/.")
-    print(listFicheros)
+    print(os.path.abspath(os.getcwd()))
     context = {
         'valor':1
     }
