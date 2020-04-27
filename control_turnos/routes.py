@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from .extensions import db
 from .models import Maquinista, Turno, turnos
-import glob
+import os, fnmatch
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -83,9 +83,11 @@ def ficherosTurno():
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
-    for name in glob.glob('logturnos/*'+maquinista.nombre_m+turno_act.nombre_t+'*'):
-        print(name)
-
+    listFicheros = os.listdir("logturnos/")
+    pattern = maquinista.nombre_m+turno_act.nombre_t+"*"
+    for entry in list:
+        if fnmatch.fnmatch(entry, pattern):
+                print (entry)
     context = {
         'valor':1
     }
