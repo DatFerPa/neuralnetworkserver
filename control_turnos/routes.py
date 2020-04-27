@@ -46,7 +46,7 @@ def listTurnos():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return
+        return render_template('principal.html')
 
     turnos = []
     for turn in maquinista.turnos:
