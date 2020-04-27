@@ -9,7 +9,12 @@ main = Blueprint('main',__name__)
 def principal(error_maquinista=False):
     print("Principal")
     print(error_maquinista)
-    return render_template('principal.html')
+    context ={"error_maquinista":False}
+
+    if error_maquinista :
+        context["error_maquinista"]=True
+
+    return render_template('principal.html',**context)
 
 @main.route('/login/',methods=['POST'])
 def login():
@@ -50,7 +55,7 @@ def listTurnos():
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.principal',error_maquinista=False))
+        return redirect(url_for('main.principal',error_maquinista=True))
 
     turnos = []
     for turn in maquinista.turnos:
