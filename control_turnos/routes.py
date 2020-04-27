@@ -87,11 +87,16 @@ def ficherosTurno():
     print(listFicheros)
     pattern = maquinista.nombre_m+turno_act.nombre_t+"*"
     print(pattern)
-    for entry in listFicheros:
-        print(entry)
-        if fnmatch.fnmatch(entry, pattern):
-                print (entry)
 
+        for entry in listFicheros:
+            print(entry)
+            try:
+                if fnmatch.fnmatch(entry, pattern):
+                        print (entry)
+            except FileNotFoundError:
+                print("Fichero no existe")
+            except:
+                print("Otro problema")
     context = {
         'valor':1
     }
