@@ -6,8 +6,15 @@ import os, glob
 main = Blueprint('main',__name__)
 
 @main.route('/')
-def principal():
-    return render_template('principal.html')
+def principal(error):
+    context = {
+        'error':False
+    }
+    if error:
+        context = {
+            'error':True
+        }
+    return render_template('principal.html',**context)
 
 @main.route('/login/',methods=['POST'])
 def login():
