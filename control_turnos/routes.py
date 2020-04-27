@@ -76,9 +76,9 @@ def listTurnos():
 @main.route('/ficherosTurno/')
 def ficherosTurno():
     print("logsTurno")
-
+    print(request.args.get('maquinista_arg'))
     context ={
-        
+
     }
 
     return render_template('ficherosTurno.html',**context)
