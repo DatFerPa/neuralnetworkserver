@@ -51,7 +51,7 @@ def listTurnos():
         subcontext = {
             "respuesta":"Fallo"
         }
-        return redirect(url_for('main.principal'),**subcontext)
+        return redirect(url_for('main.principal',**subcontext))
 
     turnos = []
     for turn in maquinista.turnos:
