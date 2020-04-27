@@ -83,7 +83,7 @@ def ficherosTurno():
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
-    listFicheros = os.listdir("./logturnos")
+    listFicheros = os.listdir("logturnos/")
     pattern = maquinista.nombre_m+turno_act.nombre_t+"*"
     for entry in list:
         if fnmatch.fnmatch(entry, pattern):
