@@ -82,9 +82,10 @@ def ficherosTurno():
     print(turno_act.nombre_t)
 
     for name in glob.glob('logturnos/*'+maquinista.nombre_m+'*'+turno_act.nombre_t+'*'):
+        print(name)
 
     context = {
-
+        'valor':1
     }
 
 
