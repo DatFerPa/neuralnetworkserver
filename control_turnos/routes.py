@@ -86,7 +86,9 @@ def ficherosTurno():
     listFicheros = os.listdir(os.path.abspath(os.getcwd())+"/control_turnos/logturnos")
     print(listFicheros)
     pattern = maquinista.nombre_m+turno_act.nombre_t+"*"
+    print(pattern)
     for entry in listFicheros:
+        print(entry)
         if fnmatch.fnmatch(entry, pattern):
                 print (entry)
 
