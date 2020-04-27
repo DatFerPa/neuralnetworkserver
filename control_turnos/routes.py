@@ -9,11 +9,11 @@ main = Blueprint('main',__name__)
 def principal():
     print("Principal")
     context = {
-        error_maquinista:False
+        'error_maquinista':False
     }
     if request.args.get('error_maquinista') is not None:
         context = {
-            error_maquinista:True
+            'error_maquinista':True
         }
 
     print(context)
