@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 
 from .extensions import db
 from .models import Maquinista, Turno, turnos
-
+import os, glob
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -40,3 +40,39 @@ def turnos():
             concatenacion_turnos = concatenacion_turnos + ":"
 
     return concatenacion_turnos
+
+@main.rout('/listTurnos/',methods=['POST'])
+def listTurnos():
+    nombre = request.form.get('nombre')
+    maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
+    if maquinista is None:
+        return
+
+    turnos = []
+    for turn in maquinista.turnos:
+        turno_actual = Turno.query.filter_by(id=turn.id).first()
+        turnos.append(turno_actual)
+
+    context = {
+        'turnos':turnos,
+        'maquinista':maquinista
+    }
+
+    return render_template('listTurnos.html',**context)
+
+#llegarr a este a traes de un url_for, y meter parametros en la funcion
+@main.rout('/logsTurno/')
+def logsTurno(maquinista_arg,turno_arg):
+
+    context ={
+
+    }
+
+    return render_template('logsTurno.html',**context)
+
+
+
+@main.rout('/addLogTurno/',methods=['POST'])
+def addLogTurno():
+
+    return "si"

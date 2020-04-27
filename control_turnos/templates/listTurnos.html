@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Listado de turnos de {{ maquinista.nombre_m }}</title>
+  </head>
+  <body>
+    <ul>
+      {% for turno in turnos %}
+        <li> <a href="{{ url_for('logsTurno',maquinista_arg=maquinista,turno_arg=turno) }}"> {{ turno.nombre_t} } </a>  </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

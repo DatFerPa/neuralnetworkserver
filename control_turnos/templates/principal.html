@@ -5,6 +5,10 @@
     <title>Principal</title>
   </head>
   <body>
-    Hola caracola
+    <form method="post" action="{{ url_for('listTurnos')}}">
+      <label for="textMaquinista">Nombre del maquinista:</label><br />
+      <input id="textMaquinista" type="text" /><br />
+      <input type="submit" value="Buscar" />
+    </form>
   </body>
 </html>
