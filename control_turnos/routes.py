@@ -104,7 +104,8 @@ def ficherosTurno():
 
     context = {
         'ficheros_logs':ficheros_logs,
-        'fechas_ficheros':fechas_ficheros
+        'fechas_ficheros':fechas_ficheros,
+        'nombre_turno':turno_act.nombre_t
     }
 
     return render_template('ficherosTurno.html',**context)
@@ -112,12 +113,21 @@ def ficherosTurno():
 @main.route('/logsTurno/')
 def logsTurno():
     print("logsTurno")
+    nombre = request.args.get('nombre_fichero_arg')
+    path_fichero = os.path.abspath(os.getcwd())+"/control_turnos/logturnos/"+nombre
+    filas = []
+
+    file = open(path_fichero,"r")
+    for fila in file:
+        filas.append(fila)
 
     context = {
-
+        'fecha':request.args.get('fecha_fichero_arg'),
+        'nombre_turno':request.args.get('nombre_turno_arg'),
+        'filas':filas
     }
 
-    return render_template('logsTurno.html')
+    return render_template('logsTurno.html',**context)
 
 @main.route('/addLogTurno/',methods=['POST'])
 def addLogTurno():

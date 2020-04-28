@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{{ maquinista.nombre_m }}
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>Ficheros de turno</title>
+    <title>Ficheros del turno  {{ nombre_turno }}</title>
   </head>
   <body>
     <ul>
 
     {% for i in range(ficheros_logs|length) %}
-      <li> <a href="{{ url_for('main.logsTurno',nombre_fichero_arg=ficheros_logs[i]) }}"> {{ fechas_ficheros[i] }} </a>  </li>
+      <li> <a href="{{ url_for('main.logsTurno',nombre_fichero_arg=ficheros_logs[i],nombre_turno_arg=nombre_turno,fecha_fichero_arg=fechas_ficheros) }}"> {{ fechas_ficheros[i] }} </a>  </li>
     {% endfor %}
     </ul>
   </body>
