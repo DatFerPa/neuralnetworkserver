@@ -85,22 +85,27 @@ def ficherosTurno():
 
     listFicheros = os.listdir(os.path.abspath(os.getcwd())+"/control_turnos/logturnos")
     print(listFicheros)
-    pattern = maquinista.nombre_m+turno_act.nombre_t+"*"
+    pattern = maquinista.nombre_m+" "+turno_act.nombre_t+"*"
     print(pattern)
+    ficheros_logs = []
+    fechas_ficheros = []
     for entry in listFicheros:
         print(entry)
         try:
             if fnmatch.fnmatch(entry, pattern):
                     print (entry)
+                    ficheros_logs.append(entry)
+                    valores = entry.split(",")
+                    fechas_ficheros.append(valores[1])
         except FileNotFoundError:
             print("Fichero no existe")
         except:
             print("Otro problema")
-            
-    context = {
-        'valor':1
-    }
 
+    context = {
+        'ficheros_logs':ficheros_logs,
+        'fechas_ficheros':fechas_ficheros
+    }
 
     return render_template('ficherosTurno.html',**context)
 
