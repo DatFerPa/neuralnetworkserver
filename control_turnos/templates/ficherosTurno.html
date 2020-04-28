@@ -7,7 +7,7 @@
   <body>
     <ul>
 
-    {% for i in range(length(ficheros_logs)) %}
+    {% for i in range(ficheros_logs|length) %}
       <li> <a href="{{ url_for('main.logsTurno',nombre_fichero_arg=ficheros_logs[i]) }}"> {{ fechas_ficheros[i] }} </a>  </li>
     {% endfor %}
     </ul>
