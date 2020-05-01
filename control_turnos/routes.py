@@ -142,9 +142,9 @@ def addLogTurno():
         contenido = request.form.get('contenido')
         path_fichero = os.path.abspath(os.getcwd())+"/control_turnos/logturnos/"
 
-        f = open(path_fichero+nombreMaquinista+" "+nombreTurno", Fecha "+fecha+" Hora "+hora+".txt","w+")
+        f = open(path_fichero+nombreMaquinista+" "+nombreTurno+", Fecha "+fecha+" Hora "+hora+".txt","w+")
         lista_split = contenido.split(":")
-        
+
         for i in lista_split:
             f.write(i  + "\n")
 
