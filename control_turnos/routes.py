@@ -129,7 +129,28 @@ def logsTurno():
 
     return render_template('logsTurno.html',**context)
 
+
+
 @main.route('/addLogTurno/',methods=['POST'])
 def addLogTurno():
+    print("addLogTurno")
+    try:
+        nombreMaquinista = request.form.get('nombreMaquinista')
+        nombreTurno = request.form.get('nombreTurno')
+        fecha = request.form.get('fecha')
+        hora = request.form.get('hora')
+        contenido = request.form.get('contenido')
+        path_fichero = os.path.abspath(os.getcwd())+"/control_turnos/logturnos/"
 
-    return "si"
+        f = open(path_fichero+nombreMaquinista+" "+nombreTurno", Fecha "+fecha+" Hora "+hora+".txt","w+")
+        lista_split = contenido.split(":")
+        
+        for i in lista_split:
+            f.write(i  + "\n")
+
+        f.close()
+
+    except:
+        return "turnoFalseAdd"
+
+    return "turnoTrueAdd"
