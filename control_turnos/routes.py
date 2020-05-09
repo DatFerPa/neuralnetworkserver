@@ -174,7 +174,7 @@ def getIsOk():
     prediccion = modelo.predict(numpy_lista)
     prediccion_max = np.argmax(prediccion[0])
     print("Si movimiento: "+prediccion[0][0]+" -  No movimiento: "+prediccion[0][1])
-    print("Prediccion maxima para: "prediccion_max)
+    print("Prediccion maxima para: "+prediccion_max)
     #si movimiento 0 no movimiento 1
     if prediccion_max == 0:
         return "siMovimiento"
