@@ -157,9 +157,9 @@ def addLogTurno():
     return "turnoTrueAdd"
 
 
-
 @main.route('/getIsOk/',methods=['POST'])
 def getIsOk():
+    print("getIsOk")
     accel = request.form.get('accel')
     corte_1 = accel.split(":")
     lista_accel = []
