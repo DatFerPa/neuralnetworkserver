@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-
+import numpy as np
+import tensorflow as tf
 from .extensions import db
 from .models import Maquinista, Turno, turnos
 import os, fnmatch
@@ -154,3 +155,26 @@ def addLogTurno():
         return "turnoFalseAdd"
 
     return "turnoTrueAdd"
+
+
+
+@main.route('/getIsOk/',methods=['POST'])
+def getIsOk():
+    accel = request.form.get('accel')
+    corte_1 = accel.split(":")
+    lista_accel = []
+    for x in corte_1:
+        lista = list(map(float,x.split(";")))
+        lista_accel.append(lista)
+    lista_previa = []
+    lista_previa.append(lista_accel)
+    print(lista_previa)
+    numpy_lista = np.array(lista_previa)
+    modelo = tf.keras.models.load_model('modelo_movimientos')
+    prediccion = modelo.predict(numpy_lista)
+    prediccion_max = np.argmax(prediccion[0])
+    #si movimiento 0 no movimiento 1
+    if prediccion_max == 0:
+        return "siMovimiento"
+    else:
+        return "noMovimiento"
