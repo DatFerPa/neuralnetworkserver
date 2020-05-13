@@ -9,33 +9,34 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link href="{{ url_for('static', filename='general.css') }}" rel="stylesheet">  
+    <link href="{{ url_for('static', filename='general.css') }}" rel="stylesheet">
 
   </head>
   <body>
-    <div class="container">
-      {% if error_maquinista %}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        El <strong>nombre</strong> del maquinista <strong>no existe</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="general-contenedor">
+      <div class="container">
+        {% if error_maquinista %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          El <strong>nombre</strong> del maquinista <strong>no existe</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
+        <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
+          <div class="form-group has-danger">
+            <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
+            <div class="col-sm-5">
+              <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
+            </div>
+          </div>
+          <div class="form_group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <input class="btn btn-primary" type="submit" value="Buscar" />
+            </div>
+          </div>
+        </form>
       </div>
-      {% endif %}
-
-      <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
-        <div class="form-group has-danger">
-          <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
-          <div class="col-sm-5">
-            <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
-          </div>
-        </div>
-        <div class="form_group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <input class="btn btn-primary" type="submit" value="Buscar" />
-          </div>
-        </div>
-      </form>
-
+    </div>
   </body>
 </html>
