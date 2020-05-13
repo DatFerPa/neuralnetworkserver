@@ -178,5 +178,5 @@ def getIsOk():
     #si movimiento 0 no movimiento 1
     if prediccion_max == 0:
         return "siMovimiento"
-    else:
-        return "noMovimiento"
+
+    return "noMovimiento"
