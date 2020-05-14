@@ -87,10 +87,8 @@ def ficherosTurno():
     print(maquinista.nombre_m)
     print(turno_act.nombre_t)
 
-    listFicheros = os.listdir(os.path.abspath(os.getcwd())+"/control_turnos/logturnos")
-    print(listFicheros)
+
     pattern = maquinista.nombre_m+" "+turno_act.nombre_t
-    print(pattern)
     ficheros_logs = []
     fechas_ficheros = []
 
@@ -102,12 +100,16 @@ def ficherosTurno():
     file_service = account.create_file_service()
 
     files = list(file_service.list_directories_and_files('shareficherosmaquinistas',prefix=pattern))
-
+    print("busqueda de ficheros")
     for file in files:
+        print(file.name)
         textos = file.name.split(',')
+        print(textos)
         ficheros_logs.append(file.name)
         valores = textos.split('.txt')
+        print(valores)
         fechas_ficheros.append(valores[0])
+        print("---------")
 
     context = {
         'ficheros_logs':ficheros_logs,
