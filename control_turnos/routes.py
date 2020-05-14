@@ -129,7 +129,7 @@ def logsTurno():
 
     filas = file_and_contenido.content.split('\n')
     print(filas)
-    
+
     context = {
         'fecha':request.args.get('fecha_fichero_arg'),
         'nombre_turno':request.args.get('nombre_turno_arg'),
@@ -153,7 +153,7 @@ def addLogTurno():
         lista_split = contenido.split(";")
         texto ="";
         for i in lista_split:
-            texto = texto+ i + "\n")
+            texto = texto+ i + "\n"
 
 
         STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
