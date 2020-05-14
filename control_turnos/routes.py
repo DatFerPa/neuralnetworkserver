@@ -4,6 +4,9 @@ import tensorflow as tf
 from .extensions import db
 from .models import Maquinista, Turno, turnos
 import os, fnmatch
+import azure.storage.common
+from azure.storage.common import CloudStorageAccount
+
 main = Blueprint('main',__name__)
 
 @main.route('/')
@@ -115,13 +118,18 @@ def ficherosTurno():
 def logsTurno():
     print("logsTurno")
     nombre = request.args.get('nombre_fichero_arg')
-    path_fichero = os.path.abspath(os.getcwd())+"/control_turnos/logturnos/"+nombre
-    filas = []
 
-    file = open(path_fichero,"r")
-    for fila in file:
-        filas.append(fila)
+    STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
+    STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
 
+    account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
+
+    file_service = account.create_file_service()
+    file_and_contenido =file_service.get_file_to_text('shareficherosmaquinistas',None,nombre)
+
+    filas = file_and_contenido.content.split('\n')
+    print(filas)
+    
     context = {
         'fecha':request.args.get('fecha_fichero_arg'),
         'nombre_turno':request.args.get('nombre_turno_arg'),
@@ -141,15 +149,24 @@ def addLogTurno():
         fecha = request.form.get('fecha')
         hora = request.form.get('hora')
         contenido = request.form.get('contenido')
-        path_fichero = os.path.abspath(os.getcwd())+"/control_turnos/logturnos/"
 
-        f = open(path_fichero+nombreMaquinista+" "+nombreTurno+", Fecha "+fecha+" Hora "+hora+".txt","w+")
         lista_split = contenido.split(";")
-
+        texto ="";
         for i in lista_split:
-            f.write(i  + "\n")
+            texto = texto+ i + "\n")
 
-        f.close()
+
+        STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
+        STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
+
+        account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
+        file_service = account.create_file_service()
+
+        file_service.create_file_from_text(
+        "shareficherosmaquinistas",
+        None,
+        nombreMaquinista+" "+nombreTurno+", Fecha "+fecha+" Hora "+hora+".txt",
+        texto)
 
     except:
         return "turnoFalseAdd"
