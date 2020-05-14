@@ -106,7 +106,7 @@ def ficherosTurno():
         textos = file.name.split(',')
         print(textos)
         ficheros_logs.append(file.name)
-        valores = textos.split('.txt')
+        valores = textos[1].split('.txt')
         print(valores)
         fechas_ficheros.append(valores[0])
         print("---------")
