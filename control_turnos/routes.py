@@ -89,22 +89,25 @@ def ficherosTurno():
 
     listFicheros = os.listdir(os.path.abspath(os.getcwd())+"/control_turnos/logturnos")
     print(listFicheros)
-    pattern = maquinista.nombre_m+" "+turno_act.nombre_t+"*"
+    pattern = maquinista.nombre_m+" "+turno_act.nombre_t
     print(pattern)
     ficheros_logs = []
     fechas_ficheros = []
-    for entry in listFicheros:
-        print(entry)
-        try:
-            if fnmatch.fnmatch(entry, pattern):
-                    print (entry)
-                    ficheros_logs.append(entry)
-                    valores = entry.split(",")
-                    fechas_ficheros.append(valores[1])
-        except FileNotFoundError:
-            print("Fichero no existe")
-        except:
-            print("Otro problema")
+
+    STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
+    STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
+
+    account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
+
+    file_service = account.create_file_service()
+
+    files = list(file_service.list_directories_and_files('shareficherosmaquinistas',prefix=pattern))
+
+    for file in files:
+        textos = file.name.split(',')
+        ficheros_logs.append(file.name)
+        valores = textos.split('.txt')
+        fechas_ficheros.append(valores[0])
 
     context = {
         'ficheros_logs':ficheros_logs,
