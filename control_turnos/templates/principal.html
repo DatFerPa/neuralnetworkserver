@@ -16,6 +16,14 @@
     <div class="general-contenedor">
       <div class="container">
 
+        {% if error_maquinista %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          El maquinista <strong>no se encuentra</strong> en el sistema
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
 
         <div class="general-contenedor">
           <div class="container">
@@ -30,7 +38,7 @@
             </ul>
           </div>
         </div>
-        
+
         </div>
       </div>
     </div>

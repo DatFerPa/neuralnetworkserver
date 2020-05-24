@@ -149,7 +149,7 @@ def nuevoTurno():
     print(nombreMaquina)
     turno = Turno.query.filter_by(nombre_t=nombreTurno,maquina=nombreMaquina).first()
     if turno is None:
-        turno = Turno(nomre_t=nombreTurno,maquina=nombreMaquina)
+        turno = Turno(nombre_t=nombreTurno,maquina=nombreMaquina)
         db.session.add(turno)
         db.session.commit()
         return redirect(url_for('main.addTurnos',ok_turno=True))
