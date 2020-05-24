@@ -60,13 +60,16 @@ def turnos():
 @main.route('/adminDashboard/',methods=['POST'])
 def adminDashboard():
     print("adminDashboard")
-    nombre = request.form.get('nombre')
-    password = request.form.get('password')
-    administrador = Administrador.query.filter_by(nombre_ad=nombre,password=password).first()
-    if administrador is None:
-        return redirect(url_for('main.principal',error_administrador=True))
-
+    volver = request.form.get('volver')
+    if volver is None:
+        nombre = request.form.get('nombre')
+        password = request.form.get('password')
+        administrador = Administrador.query.filter_by(nombre_ad=nombre,password=password).first()
+        if administrador is None:
+            return redirect(url_for('main.principal',error_administrador=True))
+    
     return render_template('adminDashboard.html')
+
 
 @main.route('/addTurnos/')
 def addTurnos():
