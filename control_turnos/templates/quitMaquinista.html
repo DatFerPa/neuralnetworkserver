@@ -10,31 +10,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="{{ url_for('static', filename='general.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='postActions.js') }}"></script>
 
   </head>
   <body>
 
     <div class="general-contenedor">
       <div class="container">
-
-        {% if error_maquinista %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El maquinista <strong>no se encuentra</strong> en el sistema
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-        {% if ok_maquinista %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          El maquinista <strong>se ha eliminado</strong>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-
-        <form class="form-horizontal"  method="POST" action="{{ url_for('main.quitarTurno') }}">
+        <form class="form-horizontal"  action="quitarMaquinista()">
           <div class="form-group has-danger">
             <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
             <div class="col-sm-5">

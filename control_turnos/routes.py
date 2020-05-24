@@ -144,9 +144,9 @@ def nuevoMaquinista():
         maquinista = Maquinista(nombre_m=nombre)
         db.session.add(maquinista)
         db.session.commit()
-        return redirect(url_for('main.addMaquinistas',ok_maquinista=True))
+        return "ok_maquinsita"
     else:
-        return redirect(url_for('main.addMaquinistas',error_maquinista=True))
+        return "error_maquinista"
 
 @main.route('/quitarMaquinista/',methods=['POST'])
 def quitarMaquinista():
@@ -154,12 +154,10 @@ def quitarMaquinista():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.quitMaquinista',error_maquinista=True))
+        return "error_maquinista"
     else:
         db.session.delete(maquinista)
-        return redirect(url_for('main.quitMaquinista',ok_maquinista=True))
-
-
+        return "ok_maquinista"
 
 
 @main.route('/nuevoTurno/',methods=['POST'])
@@ -174,10 +172,9 @@ def nuevoTurno():
         turno = Turno(nomre_t=nombreTurno,maquina=nombreMaquina)
         db.session.add(turno)
         db.session.commit()
-        return redirect(url_for('main.addTurnos',ok_turno=True))
+        return "ok_turno"
     else:
-        return redirect(url_for('main.addTurnos',error_turno=True))
-
+        return "error_turno"
 
 
 @main.route('/quitarTurno/',methods=['POST'])
@@ -186,10 +183,10 @@ def quitarTurno():
     nombreTurno = request.form.get('nombreTurno')
     turno = Turno.query.filter_by(nombre_t=nombreTurno).first()
     if turno is None:
-        return redirect(url_for('main.quitTurnos',error_turno=True))
+        return "error_turno"
     else:
         db.session.delete(maquinista)
-        return redirect(url_for('main.quitTurnos',ok_turno=True))
+        return "ok_turno"
 
 
 
