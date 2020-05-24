@@ -57,13 +57,7 @@ def turnos():
     return concatenacion_turnos
 
 
-@main.route('/loginAdmin/',methods=['POST'])
-def loginAdmin():
-    print('loginAdmin')
-    
-
-
-@main.route('/adminDashboard/')
+@main.route('/adminDashboard/',methods=['POST'])
 def adminDashboard():
     print("adminDashboard")
     nombre = request.form.get('nombre')
