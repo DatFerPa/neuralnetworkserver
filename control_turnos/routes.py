@@ -144,9 +144,9 @@ def nuevoMaquinista():
         maquinista = Maquinista(nombre_m=nombre)
         db.session.add(maquinista)
         db.session.commit()
-        return redirect(url_for('main.addMaquinista',ok_maquinista=True))
+        return redirect(url_for('main.addMaquinistas',ok_maquinista=True))
     else:
-        return redirect(url_for('main.addMaquinista',error_maquinista=True))
+        return redirect(url_for('main.addMaquinistas',error_maquinista=True))
 
 @main.route('/quitarMaquinista/',methods=['POST'])
 def quitarMaquinista():
