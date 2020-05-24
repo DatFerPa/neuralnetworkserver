@@ -170,8 +170,8 @@ def quitarTurno():
 
 
 
-@main.route('/buscarTurnosMaquinsita/')
-def buscarTurnosMaquinsita():
+@main.route('/buscarTurnosMaquinista/')
+def buscarTurnosMaquinista():
     context = {
         'error_maquinista':False,
     }
