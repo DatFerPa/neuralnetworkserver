@@ -232,7 +232,7 @@ def gestionTurnos():
     return render_template('gestionTurnos.html',**context)
 
 @main.route('/asignarDenegarTurnos/',methods=['POST'])
-def asignarTurnos():
+def asignarDenegarTurnos():
     context = {
         'error_gestion':False,
         'ok_gestion':False
