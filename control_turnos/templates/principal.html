@@ -15,6 +15,26 @@
   <body>
     <div class="general-contenedor">
       <div class="container">
+
+
+        <div class="general-contenedor">
+          <div class="container">
+            <h2>Panel de control del administrador</h2>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.buscarTurnosMaquinsita') }}"> Buscar turnos de un maquinista </a>  </li>
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addTurnos') }}"> Crear turno </a>  </li>
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addMaquinistas') }}"> Crear maquinista </a>  </li>
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitMaquinistas') }}"> Quitar maquinista </a>  </li>
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitTurnos') }}"> Quitar turno </a>  </li>
+                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.gestionTurnos') }}"> Gestión de turnos </a>  </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
         {% if error_maquinista %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           El <strong>nombre</strong> del maquinista <strong>no existe</strong>
@@ -32,47 +52,6 @@
           </button>
         </div>
         {% endif %}
-
-        <div class="row">
-          <div class="col">
-            <h2>Buscar turnos de un maquinista</h2>
-            <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
-              <div class="form-group has-danger">
-                <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
-                <div class="col-sm-8">
-                  <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
-                </div>
-              </div>
-              <div class="form_group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <input class="btn btn-primary" type="submit" value="Buscar" />
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="col">
-            <h2>Inicio administrador</h2>
-            <form class="form-horizontal"  method="POST" action="{{ url_for('main.adminDashboard') }}">
-              <div class="form-group has-danger">
-                <label class="col-sm" for="inputNombre">Nombre del administrador:</label>
-                <div class="col-sm-8">
-                  <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
-                </div>
-              </div>
-              <div class="form-group has-danger">
-                <label class="col-sm" for="inputPassword">Contraseña:</label>
-                <div class="col-sm-8">
-                  <input id="inputPassword" class="form-control " name="password" type="password" placeholder="Contraseña" required/>
-                </div>
-              </div>
-              <div class="form_group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <input class="btn btn-primary" type="submit" value="Entrar" />
-                </div>
-              </div>
-            </form>
-          </div>
 
 
         </div>

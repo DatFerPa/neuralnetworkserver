@@ -12,15 +12,6 @@ main = Blueprint('main',__name__)
 @main.route('/')
 def principal():
     print("Principal")
-    context = {
-        'error_maquinista':False,
-        'error_administrador':False
-    }
-    if request.args.get('error_maquinista') is not None:
-        context['error_maquinista'] = True
-    if request.args.get('error_administrador')is not None:
-        context['error_administrador'] = True
-    print(context)
     return render_template('principal.html',**context)
 
 @main.route('/login/',methods=['POST'])
@@ -55,20 +46,6 @@ def turnos():
             concatenacion_turnos = concatenacion_turnos + ":"
 
     return concatenacion_turnos
-
-
-@main.route('/adminDashboard/',methods=['POST'])
-def adminDashboard():
-    print("adminDashboard")
-    volver = request.form.get('volver')
-    if volver is None:
-        nombre = request.form.get('nombre')
-        password = request.form.get('password')
-        administrador = Administrador.query.filter_by(nombre_ad=nombre,password=password).first()
-        if administrador is None:
-            return redirect(url_for('main.principal',error_administrador=True))
-    
-    return render_template('adminDashboard.html')
 
 
 @main.route('/addTurnos/')
@@ -193,6 +170,16 @@ def quitarTurno():
 
 
 
+@main.route('/buscarTurnosMaquinsita/')
+def buscarTurnosMaquinsita():
+    context = {
+        'error_maquinista':False,
+    }
+    if request.args.get('error_maquinista') is not None:
+        context['error_maquinista'] = True
+    return render_template('buscarMaquinista.html',**context)
+
+
 @main.route('/listTurnos/',methods=['POST'])
 def listTurnos():
     print("listTurnos")
@@ -200,7 +187,7 @@ def listTurnos():
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.principal',error_maquinista=True))
+        return redirect(url_for('main.buscarTurnosMaquinsita',error_maquinista=True))
 
     turnos = []
     for turn in maquinista.turnos:
