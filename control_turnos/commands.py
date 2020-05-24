@@ -2,7 +2,7 @@ import click
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .models import Maquinista, Turno
+from .models import Maquinista, Turno, Administrador
 
 
 @click.command(name='create_tables')

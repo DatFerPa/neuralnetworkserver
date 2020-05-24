@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 import numpy as np
 import tensorflow as tf
 from .extensions import db
-from .models import Maquinista, Turno, turnos
+from .models import Maquinista, Turno, turnos, Administrador
 import os, fnmatch
 import azure.storage.common
 from azure.storage.common import CloudStorageAccount
@@ -34,6 +34,7 @@ def login():
     else:
         return 'si'
 
+
 @main.route('/turnos/',methods=['POST'])
 def turnos():
     nombre = request.form.get('nombre')
@@ -54,6 +55,13 @@ def turnos():
             concatenacion_turnos = concatenacion_turnos + ":"
 
     return concatenacion_turnos
+
+
+@main.route('/loginAdmin/',methods=['POST'])
+def loginAdmin():
+    print('loginAdmin')
+    
+
 
 @main.route('/adminDashboard/')
 def adminDashboard():
