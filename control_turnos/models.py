@@ -9,7 +9,7 @@ class Maquinista(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     nombre_m = db.Column(db.String(80), unique=True, nullable=False)
     turnos = db.relationship('Turno',secondary=turnos,lazy='subquery',
-        backref=db.backref('maquinistas', cascade="all, delete-orphan",lazy=True))
+        backref=db.backref('maquinistas', cascade="all, delete-orphan",single_parent=True,lazy=True))
 
 class Turno(db.Model):
     id = db.Column(db.Integer,primary_key=True)
