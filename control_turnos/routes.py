@@ -137,7 +137,7 @@ def quitarMaquinista():
         return redirect(url_for('main.quitMaquinista',error_maquinista=True))
     else:
         db.session.delete(maquinista)
-        db.session.commit()        
+        db.session.commit()
         return redirect(url_for('main.quitMaquinista',ok_maquinista=True))
 
 
@@ -251,6 +251,7 @@ def asignarDenegarTurnos():
         for turn in maquinista.turnos:
             if turn.nombre_t == turno.nombre_t:
                 maquinista.turnos.pop(cont)
+                db.session.commit()
                 return redirect(url_for('main.gestionTurnos',ok_gestion=True))
 
             cont += 1
