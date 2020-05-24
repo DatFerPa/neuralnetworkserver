@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 import numpy as np
 import tensorflow as tf
 from .extensions import db
-from .models import Maquinista, Turno, turnos, Administrador
+from .models import Maquinista, Turno, turnos
 import os, fnmatch
 import azure.storage.common
 from azure.storage.common import CloudStorageAccount
@@ -12,7 +12,7 @@ main = Blueprint('main',__name__)
 @main.route('/')
 def principal():
     print("Principal")
-    return render_template('principal.html',**context)
+    return render_template('principal.html')
 
 @main.route('/login/',methods=['POST'])
 def login():
@@ -124,9 +124,9 @@ def nuevoMaquinista():
         maquinista = Maquinista(nombre_m=nombre)
         db.session.add(maquinista)
         db.session.commit()
-        return "ok_maquinsita"
+        return redirect(url_for('main.addMaquinistas',ok_maquinista=True))
     else:
-        return "error_maquinista"
+        return redirect(url_for('main.addMaquinistas',error_maquinista=True))
 
 @main.route('/quitarMaquinista/',methods=['POST'])
 def quitarMaquinista():
@@ -134,10 +134,10 @@ def quitarMaquinista():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return "error_maquinista"
+        return redirect(url_for('main.quitMaquinista',error_maquinista=True))
     else:
         db.session.delete(maquinista)
-        return "ok_maquinista"
+        return redirect(url_for('main.quitMaquinista',ok_maquinista=True))
 
 
 @main.route('/nuevoTurno/',methods=['POST'])
@@ -152,9 +152,9 @@ def nuevoTurno():
         turno = Turno(nomre_t=nombreTurno,maquina=nombreMaquina)
         db.session.add(turno)
         db.session.commit()
-        return "ok_turno"
+        return redirect(url_for('main.addTurnos',ok_turno=True))
     else:
-        return "error_turno"
+        return redirect(url_for('main.addTurnos',error_turno=True))
 
 
 @main.route('/quitarTurno/',methods=['POST'])
@@ -163,10 +163,10 @@ def quitarTurno():
     nombreTurno = request.form.get('nombreTurno')
     turno = Turno.query.filter_by(nombre_t=nombreTurno).first()
     if turno is None:
-        return "error_turno"
+        return redirect(url_for('main.quitTurnos',error_turno=True))
     else:
         db.session.delete(maquinista)
-        return "ok_turno"
+        return redirect(url_for('main.quitTurnos',ok_turno=True))
 
 
 
