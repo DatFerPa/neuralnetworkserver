@@ -165,9 +165,8 @@ def quitarTurno():
     if turno is None:
         return redirect(url_for('main.quitTurnos',error_turno=True))
     else:
-        db.session.delete(maquinista)
+        db.session.delete(turno)
         return redirect(url_for('main.quitTurnos',ok_turno=True))
-
 
 
 @main.route('/buscarTurnosMaquinista/')
