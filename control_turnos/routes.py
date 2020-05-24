@@ -140,7 +140,7 @@ def nuevoMaquinista():
     nombre = request.form.get('nombre')
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
-    if maquina is None:
+    if maquinista is None:
         maquinista = Maquinista(nombre_m=nombre)
         db.session.add(maquinista)
         db.session.commit()
