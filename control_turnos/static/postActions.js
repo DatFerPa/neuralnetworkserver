@@ -5,6 +5,7 @@ function nuevoMaquinista(){
     data: {"nombre": $("#inputNombre").val()}
   }).done(function(msg){
     if("ok_maquinsita".equals(msg)){
+      print(msg)
       $(".container").prepend("<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">El maquinista <strong>se ha ñadido</strong><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
     }else{
       $(".container").prepend("<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">El maquinista <strong>ya se encuentra</strong>en el sistema<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
