@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>Principal</title>
+    <title>Gestion turnos</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -15,34 +15,53 @@
   <body>
     <div class="general-contenedor">
       <div class="container">
-        {% if error_maquinista %}
+
+        {% if error_gestion %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El <strong>nombre</strong> del maquinista <strong>no existe</strong>
+          Revise si los datos son correctos
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         {% endif %}
 
-        {% if error_administrador %}
+        {% if ok_gestion %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El <strong>nombre</strong> del administrador <strong>no existe</strong>
+          Se ha podido realizar la gestión
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         {% endif %}
 
-        <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
-          <div class="form-group has-danger">
-            <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
+        <form class="form-horizontal"  method="POST" action="{{ url_for('main.asignarDenegarTurnos') }}">
+          <div class="form-group">
+            <label class="col-sm" for="nombreMaquinista">Nombre del maquinista:</label>
             <div class="col-sm-5">
-              <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
+              <select id="nombreMaquinista" class="form-control form-control-lg" name="nombreMaquinista">
+                {% for maqunista in maquinistas %}
+                <option value="{{ maqunista.nombre_m }}">{{ maqunista.nombre_m }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm" for="nombreTurno">Nombre del turno:</label>
+            <div class="col-sm-5">
+              <select id="nombreTurno" class="form-control form-control-lg" name="nombreTurno">
+                {% for turno in turnos %}
+                <option value="{{ turno.nombre_t }}">{{ turno.nombre_t }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
           <div class="form_group">
             <div class="col-sm-offset-2 col-sm-10">
-              <input class="btn btn-primary" type="submit" value="Buscar" />
+              <input class="btn btn-primary" name="botonGestion" type="submit" value="Asignar" />
+            </div>
+            <div class="col-sm-offset-2 col-sm-10">
+              <input class="btn btn-primary" name="botonGestion" type="submit" value="Denegar" />
             </div>
           </div>
         </form>

@@ -9,9 +9,14 @@ class Maquinista(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     nombre_m = db.Column(db.String(80), unique=True, nullable=False)
     turnos = db.relationship('Turno',secondary=turnos,lazy='subquery',
-        backref=db.backref('maquinistas',lazy=True))
+        backref=db.backref('maquinistas', cascade="all, delete-orphan",lazy=True))
 
 class Turno(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     nombre_t = db.Column(db.String(50),unique=True,nullable=False)
     maquina = db.Column(db.String(50),unique=True,nullable=False)
+
+class Administrador(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    nombre_ad = db.Column(db.String(50),unique=True,nullable=False)
+    password = db.Column(db.String(50),nullable=False)

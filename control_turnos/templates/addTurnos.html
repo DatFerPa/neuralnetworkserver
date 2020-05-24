@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>Principal</title>
+    <title>Añadir un turno</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -13,40 +13,54 @@
 
   </head>
   <body>
+    Añadir turnos
+
+
     <div class="general-contenedor">
       <div class="container">
-        {% if error_maquinista %}
+
+        {% if error_turno %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El <strong>nombre</strong> del maquinista <strong>no existe</strong>
+          El turno <strong>ya se encuentra</strong> en el sistema
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
+        {% if ok_turno %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          El turno <strong>se ha añadido</strong>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         {% endif %}
 
-        {% if error_administrador %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El <strong>nombre</strong> del administrador <strong>no existe</strong>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-
-        <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
+        <form class="form-horizontal"  method="POST" action="{{ url_for('main.nuevoTurno') }}">
           <div class="form-group has-danger">
-            <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>
+            <label class="col-sm" for="nombreTurno">Nombre del turno:</label>
             <div class="col-sm-5">
-              <input id="inputNombre" class="form-control " name="nombre" type="text" placeholder="Nombre" required/>
+              <input id="nombreTurno" class="form-control " name="nombreTurno" type="text" placeholder="Nombre del turno" required/>
             </div>
           </div>
+
+          <div class="form-group has-danger">
+            <label class="col-sm" for="nombreMaquina">Nombre de la maquina:</label>
+            <div class="col-sm-5">
+              <input id="nombreMaquina" class="form-control " name="nombreMaquina" type="text" placeholder="Nombre de la maquina" required/>
+            </div>
+          </div>
+
           <div class="form_group">
             <div class="col-sm-offset-2 col-sm-10">
-              <input class="btn btn-primary" type="submit" value="Buscar" />
+              <input class="btn btn-primary" type="submit" value="Añadir turno" />
             </div>
           </div>
         </form>
       </div>
     </div>
+
+
+
   </body>
 </html>
