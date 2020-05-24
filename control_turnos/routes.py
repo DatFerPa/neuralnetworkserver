@@ -137,6 +137,7 @@ def quitarMaquinista():
         return redirect(url_for('main.quitMaquinista',error_maquinista=True))
     else:
         db.session.delete(maquinista)
+        db.session.commit()        
         return redirect(url_for('main.quitMaquinista',ok_maquinista=True))
 
 
@@ -166,6 +167,7 @@ def quitarTurno():
         return redirect(url_for('main.quitTurnos',error_turno=True))
     else:
         db.session.delete(turno)
+        db.session.commit()
         return redirect(url_for('main.quitTurnos',ok_turno=True))
 
 
