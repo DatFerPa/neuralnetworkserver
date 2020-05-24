@@ -100,7 +100,7 @@ def quitTurnos():
 
 
 
-@main.rout('/addMaquinistas/')
+@main.route('/addMaquinistas/')
 def addMaquinistas():
     print('addMaquinistas')
     context = {
@@ -116,7 +116,7 @@ def addMaquinistas():
     print(context)
     return render_template('addMaquinista.html',**context)
 
-@main.rout('/quitMaquinistas/')
+@main.route('/quitMaquinistas/')
 def quitMaquinistas():
     print('quitMaquinistas')
     context = {
@@ -132,7 +132,7 @@ def quitMaquinistas():
     print(context)
     return render_template('quitMaquinista.html',**context)
 
-@main.rout('/nuevoMaquinista/',methods=['POST'])
+@main.route('/nuevoMaquinista/',methods=['POST'])
 def nuevoMaquinista():
     print('nuevoMaquinista')
     nombre = request.form.get('nombre')
@@ -146,7 +146,7 @@ def nuevoMaquinista():
     else:
         return redirect(url_for('main.addMaquinista',error_maquinista=True))
 
-@main.rout('/quitarMaquinista/',methods=['POST'])
+@main.route('/quitarMaquinista/',methods=['POST'])
 def quitarMaquinista():
     print('quitarMaquinista')
     nombre = request.form.get('nombre')
@@ -160,7 +160,7 @@ def quitarMaquinista():
 
 
 
-@main.rout('/nuevoTurno/',methods=['POST'])
+@main.route('/nuevoTurno/',methods=['POST'])
 def nuevoTurno():
     print('nuevoTurno')
     nombreTurno = request.form.get('nombreTurno')
@@ -178,7 +178,7 @@ def nuevoTurno():
 
 
 
-@main.rout('/quitarTurno/',methods=['POST'])
+@main.route('/quitarTurno/',methods=['POST'])
 def quitarTurno():
     print('quitarTurno')
     nombreTurno = request.form.get('nombreTurno')
