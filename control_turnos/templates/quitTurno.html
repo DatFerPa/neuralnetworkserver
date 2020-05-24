@@ -19,7 +19,7 @@
     <div class="general-contenedor">
       <div class="container">
 
-        {% if error_maquinista %}
+        {% if error_turno %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           El turno <strong>no se encuentra</strong> en el sistema
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -27,7 +27,7 @@
           </button>
         </div>
         {% endif %}
-        {% if ok_maquinista %}
+        {% if ok_turno %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           El turno <strong>se ha eliminado</strong>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">

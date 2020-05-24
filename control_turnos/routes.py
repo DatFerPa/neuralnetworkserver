@@ -187,7 +187,7 @@ def listTurnos():
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.buscarTurnosMaquinsita',error_maquinista=True))
+        return redirect(url_for('main.buscarTurnosMaquinista',error_maquinista=True))
 
     turnos = []
     for turn in maquinista.turnos:
