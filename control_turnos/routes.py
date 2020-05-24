@@ -12,7 +12,7 @@ main = Blueprint('main',__name__)
 @main.route('/')
 def principal():
     print("Principal")
-    return redirect(url_for(main.principal))
+    return render_template('principal.html')
 
 @main.route('/login/',methods=['POST'])
 def login():
