@@ -13,33 +13,16 @@
 
   </head>
   <body>
-    <div class="general-contenedor">
-      <div class="container">
-
-        {% if error_maquinista %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El maquinista <strong>no se encuentra</strong> en el sistema
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-
-        <div class="general-contenedor">
-          <div class="container">
-            <h2>Panel de control del administrador</h2>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.buscarTurnosMaquinista') }}"> Buscar turnos de un maquinista </a>  </li>
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addMaquinistas') }}"> Crear maquinista </a>  </li>
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitMaquinistas') }}"> Quitar maquinista </a>  </li>
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addTurnos') }}"> Crear turno </a>  </li>
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitTurnos') }}"> Quitar turno </a>  </li>
-                <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.gestionTurnos') }}"> Gestión de turnos </a>  </li>
-            </ul>
-          </div>
-        </div>
-
-        </div>
+    <div class="container">
+      <div class="general-contenedor">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.buscarTurnosMaquinista') }}"> Buscar turnos de un maquinista </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addMaquinistas') }}"> Crear maquinista </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitMaquinistas') }}"> Quitar maquinista </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.addTurnos') }}"> Crear turno </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.quitTurnos') }}"> Quitar turno </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.gestionTurnos') }}"> Gestión de turnos </a>  </li>
+        </ul>
       </div>
     </div>
   </body>
