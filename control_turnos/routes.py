@@ -221,18 +221,21 @@ def gestionTurnos():
 
 @main.route('/asignarDenegarTurnos/',methods=['POST'])
 def asignarDenegarTurnos():
+    print("asignarDenegarTurnos")
     context = {
         'error_gestion':False,
         'ok_gestion':False
     }
-    nombreMaquinista = request.args.get('nombreMaquinista')
-    nombreTurno = request.args.get('nombreTurno')
-    gestion = request.args.get('botonGestion')
+    nombreMaquinista = request.form.get('nombreMaquinista')
+    nombreTurno = request.form.get('nombreTurno')
+    gestion = request.form.get('botonGestion')
     print(nombreMaquinista)
     print(nombreTurno)
     print(gestion)
     maquinista = Maquinista.query.filter_by(nombre_m=nombreMaquinista).first()
     turno = Turno.query.filter_by(nombre_t=nombreTurno).first()
+    print(maquinista)
+    print(turno)
     if maquinista is None and turno is None:
         return redirect(url_for('main.gestionTurnos',error_gestion=True))
 
