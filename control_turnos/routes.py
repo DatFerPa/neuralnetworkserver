@@ -261,6 +261,9 @@ def asignarDenegarTurnos():
                 return redirect(url_for('main.gestionTurnos',ok_gestion=True))
 
             cont += 1
+
+        return redirect(url_for('main.gestionTurnos',error_gestion=True))
+
     else:
         return redirect(url_for('main.gestionTurnos',error_gestion=True))
 
