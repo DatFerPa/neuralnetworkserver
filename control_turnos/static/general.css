@@ -3,5 +3,11 @@ ul{
 }
 
 .general-contenedor{
+  padding: 15px;
+  border-radius: 25px;
+  background: rgba(173, 214, 232, 1)
+}
+
+.container{
   margin-top: 30px;
 }

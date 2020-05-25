@@ -14,40 +14,41 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-light" style="background-color: #add6e8;">
       <a class="navbar-brand" href="{{ url_for('main.principal') }}">Volver</a>
     </nav>
 
-    <div class="general-contenedor">
-      <div class="container">
+    <div class="container">
+      {% if error_turno %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        El turno <strong>ya se encuentra</strong> en el sistema
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      {% if ok_turno %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        El turno <strong>se ha añadido</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+    </div>
 
-        {% if error_turno %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          El turno <strong>ya se encuentra</strong> en el sistema
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-        {% if ok_turno %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          El turno <strong>se ha añadido</strong>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        {% endif %}
-
+    <div class="container">
+      <div class="general-contenedor">
         <form class="form-horizontal"  method="POST" action="{{ url_for('main.nuevoTurno') }}">
           <div class="form-group has-danger">
-            <label class="col-sm" for="nombreTurno">Nombre del turno:</label>
+            <label class="col-sm" for="nombreTurno"><strong>Nombre del turno:</strong></label>
             <div class="col-sm-5">
               <input id="nombreTurno" class="form-control " name="nombreTurno" type="text" placeholder="Nombre del turno" required/>
             </div>
           </div>
 
           <div class="form-group has-danger">
-            <label class="col-sm" for="nombreMaquina">Nombre de la maquina:</label>
+            <label class="col-sm" for="nombreMaquina"><strong>Nombre de la maquina:</strong></label>
             <div class="col-sm-5">
               <input id="nombreMaquina" class="form-control " name="nombreMaquina" type="text" placeholder="Nombre de la maquina" required/>
             </div>
@@ -55,7 +56,7 @@
 
           <div class="form_group">
             <div class="col-sm-offset-2 col-sm-10">
-              <input class="btn btn-primary" type="submit" value="Añadir turno" />
+              <input class="btn btn-light" type="submit" value="Añadir turno" />
             </div>
           </div>
         </form>
