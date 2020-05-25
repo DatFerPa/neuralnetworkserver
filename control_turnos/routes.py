@@ -241,15 +241,17 @@ def asignarDenegarTurnos():
 
     if gestion == "Asignar":
         #comprobar si el turno ya esta asignado
+        print("Asignar")
         for turn in maquinista.turnos:
             if turn.nombre_t == turno.nombre_t:
                 context['error_gestion']:True
-                return render_template('gestionTurnos.html',**context)
+                return redirect(url_for('main.gestionTurnos',error_gestion=True))
         maquinista.turnos.append(turno)
         db.session.commit()
         return redirect(url_for('main.gestionTurnos',ok_gestion=True))
 
     elif gestion == "Denegar":
+        print("Denegar")
         cont = 0
         for turn in maquinista.turnos:
             if turn.nombre_t == turno.nombre_t:
