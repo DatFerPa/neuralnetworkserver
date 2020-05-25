@@ -134,11 +134,11 @@ def quitarMaquinista():
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.quitMaquinista',error_maquinista=True))
+        return redirect(url_for('main.quitMaquinistas',error_maquinista=True))
     else:
         db.session.delete(maquinista)
         db.session.commit()
-        return redirect(url_for('main.quitMaquinista',ok_maquinista=True))
+        return redirect(url_for('main.quitMaquinistas',ok_maquinista=True))
 
 
 @main.route('/nuevoTurno/',methods=['POST'])
@@ -240,7 +240,6 @@ def asignarDenegarTurnos():
         return redirect(url_for('main.gestionTurnos',error_gestion=True))
 
     if gestion == "Asignar":
-        #comprobar si el turno ya esta asignado
         print("Asignar")
         for turn in maquinista.turnos:
             if turn.nombre_t == turno.nombre_t:
@@ -254,6 +253,7 @@ def asignarDenegarTurnos():
         print("Denegar")
         cont = 0
         for turn in maquinista.turnos:
+            print(turn.nombre_t)
             if turn.nombre_t == turno.nombre_t:
                 maquinista.turnos.pop(cont)
                 db.session.commit()
