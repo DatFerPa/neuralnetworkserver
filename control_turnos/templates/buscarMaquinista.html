@@ -21,7 +21,14 @@
     <div class="general-contenedor">
       <div class="container">
 
-          <h2>Buscar turnos de un maquinista</h2>
+          {% if error_maquinista %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            El maquinista <strong>ya se encuentra</strong> en el sistema
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
           <form class="form-horizontal"  method="POST" action="{{ url_for('main.listTurnos') }}">
             <div class="form-group has-danger">
               <label class="col-sm" for="inputNombre">Nombre del maquinista:</label>

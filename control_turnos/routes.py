@@ -163,6 +163,7 @@ def quitarTurno():
     print('quitarTurno')
     nombreTurno = request.form.get('nombreTurno')
     turno = Turno.query.filter_by(nombre_t=nombreTurno).first()
+    print(turno)
     if turno is None:
         return redirect(url_for('main.quitTurnos',error_turno=True))
     else:
