@@ -42,7 +42,11 @@
           <div class="form-group has-danger">
             <label class="col-sm" for="inputNombre"><strong>Nombre del turno:</strong></label>
             <div class="col-sm-5">
-              <input id="inputNombre" class="form-control " name="nombreTurno" type="text" placeholder="Nombre del turno" required/>
+              <select id="inputNombre" class="form-control form-control-lg" name="nombreTurno">
+                {% for turno in turnos %}
+                  <option value="{{ turno.nombre_t }}">{{ turno.nombre_t }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="form_group">

@@ -16,7 +16,7 @@
     {% if (ficheros_logs|length) <= 0 %}
       <div class="container">
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          El maquinista seleccionado <strong>no tiene turnos asignados</strong>.
+          El maquinista seleccionado <strong>no tiene registros para el turno</strong> {{ nombre_turno }}.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -67,9 +67,11 @@ def addTurnos():
 @main.route('/quitTurnos/')
 def quitTurnos():
     print('quitTurnos')
+    turnos = Turno.query.order_by(Turno.nombre_t).all()
     context = {
         'error_turno':False,
-        'ok_turno':False
+        'ok_turno':False,
+        'turnos':turnos
     }
     if request.args.get('error_turno') is not None:
         context['error_turno'] = True
@@ -101,9 +103,11 @@ def addMaquinistas():
 @main.route('/quitMaquinistas/')
 def quitMaquinistas():
     print('quitMaquinistas')
+    maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
     context = {
         'error_maquinista':False,
-        'ok_maquinista':False
+        'ok_maquinista':False,
+        'maquinistas':maquinistas
     }
     if request.args.get('error_maquinista') is not None:
         context['error_maquinista'] = True

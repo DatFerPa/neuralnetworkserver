@@ -44,8 +44,8 @@
             <label class="col-sm" for="nombreMaquinista">Nombre del maquinista:</label>
             <div class="col-sm-5">
               <select id="nombreMaquinista" class="form-control form-control-lg" name="nombreMaquinista">
-                {% for maqunista in maquinistas %}
-                <option value="{{ maqunista.nombre_m }}">{{ maqunista.nombre_m }}</option>
+                {% for maquinista in maquinistas %}
+                  <option value="{{ maquinista.nombre_m }}">{{ maquinista.nombre_m }}</option>
                 {% endfor %}
               </select>
             </div>
