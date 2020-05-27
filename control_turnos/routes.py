@@ -420,10 +420,15 @@ def tabletGet():
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
 
     context = {
-        'error_maquinista':True,
-        'ok_maquinista':True,
+        'error_maquinista':False,
+        'ok_maquinista':False,
         'maquinistas':maquinistas
     }
+    if request.args.get('error_maquinista') is not None:
+        context['error_maquinista'] = True
+
+    if request.args.get('ok_maquinista') is not None:
+        context['ok_maquinista'] = True
 
 
     return render_template('tablet.html',**context)
@@ -435,4 +440,27 @@ def tabletPOST():
     print("tabletPOST")
     nombreMaquinista = request.form.get('botonEliminar')
     print(nombreMaquinista)
-    return redirect(url_for('main.tabletGet'))
+
+    maquinista = Maquinista.query.filter_by(nombre_m=nombreMaquinista).first()
+
+    if maquinista is None:
+        return redirect(url_for('main.tabletGet',error_maquinista=True))
+    else:
+        db.session.delete(maquinista)
+        db.session.commit()
+
+        STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
+        STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
+        account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
+        file_service = account.create_file_service()
+        files = list(file_service.list_directories_and_files('shareficherosmaquinistas',prefix=maquinista.nombre_m))
+        for file in files:
+            print(file.name)
+            file_service.delete_file(
+                "shareficherosmaquinistas",
+                None,
+                file.name
+            )
+            print("--------------------")
+
+        return redirect(url_for('main.tabletGet',ok_maquinista=True))
