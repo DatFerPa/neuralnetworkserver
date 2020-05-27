@@ -41,23 +41,23 @@
         <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Maquinistas</th>
-                <th scope="col">Turnos</th>
-                <th scope="col">Accion</th>
+                <th class="centradoTabla" scope="col">Maquinistas</th>
+                <th class="centradoTabla" scope="col">Turnos</th>
+                <th class="centradoTabla" scope="col">Accion</th>
               </tr>
             </thead>
             <tbody>
               {% for maquinista in maquinistas %}
                 <tr>
-                  <td>{{ maquinista.nombre_m }}</td>
-                  <td>
+                  <td class="centradoTabla" >{{ maquinista.nombre_m }}</td>
+                  <td class="centradoTabla" >
                     <ul style="list-style: none;">
                       {% for turno in maquinista.turnos %}
                         <li>{{ turno.nombre_t }}</li>
                       {% endfor %}
                     </ul>
                   </td>
-                  <td><form method="POST" action="{{ url_for('main.tabletPOST') }}"><button class="btn btn-light" name="botonEliminar" type="submit" value="{{ maquinista.nombre_m }}" />Eliminar</button></td>
+                  <td class="centradoTabla" ><form method="POST" action="{{ url_for('main.tabletPOST') }}"><button class="btn btn-light" name="botonEliminar" type="submit" value="{{ maquinista.nombre_m }}" />Eliminar</button></td>
                 </tr>
               {% endfor %}
             </tbody>
