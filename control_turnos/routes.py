@@ -193,8 +193,10 @@ def quitarTurno():
 
 @main.route('/buscarTurnosMaquinista/')
 def buscarTurnosMaquinista():
+    maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
     context = {
-        'error_maquinista':False,
+        'maquinistas':maquinistas,
+        'error_maquinista':False
     }
     if request.args.get('error_maquinista') is not None:
         context['error_maquinista'] = True

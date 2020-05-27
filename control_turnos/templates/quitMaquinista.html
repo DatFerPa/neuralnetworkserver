@@ -43,13 +43,11 @@
           <div class="form-group has-danger">
             <label class="col-sm" for="inputNombre"><strong>Nombre del maquinista:</strong></label>
             <div class="col-sm-5">
-
               <select id="inputNombre" class="form-control form-control-lg" name="nombre">
                 {% for maquinista in maquinistas %}
                 <option value="{{ maquinista.nombre_m }}">{{ maquinista.nombre_m }}</option>
                 {% endfor %}
               </select>
-
             </div>
           </div>
           <div class="form_group">
