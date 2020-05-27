@@ -433,4 +433,4 @@ def tabletPOST():
     print("tabletPOST")
     nombreMaquinista = request.form.get('botonEliminar')
     print(nombreMaquinista)
-    return render_template('tablet.html',**context)
+    return redirect(url_for('main.tabletGet'))
