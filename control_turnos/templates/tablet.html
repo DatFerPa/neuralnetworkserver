@@ -40,21 +40,25 @@
       <div class="general-contenedor">
         <table class="table table-hover">
             <thead>
-                <th>Maquinistas</th>
-                <th>Turnos</th>
-                <th>Accion</th>
+              <tr>
+                <th scope="col">Maquinistas</th>
+                <th scope="col">Turnos</th>
+                <th> scope="col"Accion</th>
+              </tr>
             </thead>
             <tbody>
               {% for maquinista in maquinistas %}
-                <td>{{ maquinista.nombre_m }}</td>
-                <td>
-                  <ul>
-                    {% for turno in maquinista.turnos %}
-                      <li>{{ turno.nombre_t }}</li>
-                    {% endfor %}
-                  </ul>
-                </td>
-                <td><form><input class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" /></form></td>
+                <tr>
+                  <td>{{ maquinista.nombre_m }}</td>
+                  <td>
+                    <ul>
+                      {% for turno in maquinista.turnos %}
+                        <li>{{ turno.nombre_t }}</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                  <td><form><input class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" /></form></td>
+                </tr>
               {% endfor %}
             </tbody>
           </table>
