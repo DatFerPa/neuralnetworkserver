@@ -51,9 +51,9 @@
                 <tr>
                   <td>{{ maquinista.nombre_m }}</td>
                   <td>
-                    <ul class="list-group">
+                    <ul style="list-style: none;">
                       {% for turno in maquinista.turnos %}
-                        <li class="list-group-item">{{ turno.nombre_t }}</li>
+                        <li>{{ turno.nombre_t }}</li>
                       {% endfor %}
                     </ul>
                   </td>
