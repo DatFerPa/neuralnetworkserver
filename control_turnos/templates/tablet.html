@@ -51,13 +51,13 @@
                 <tr>
                   <td>{{ maquinista.nombre_m }}</td>
                   <td>
-                    <ul>
+                    <ul class="list-group">
                       {% for turno in maquinista.turnos %}
-                        <li>{{ turno.nombre_t }}</li>
+                        <li class="list-group-item">{{ turno.nombre_t }}</li>
                       {% endfor %}
                     </ul>
                   </td>
-                  <td><form method="POST" name="botonEliminar" action="{{ url_for('main.tabletPOST') }}"><button class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" />Eliminar</button></td>
+                  <td><form method="POST" action="{{ url_for('main.tabletPOST') }}"><button class="btn btn-light" name="botonEliminar" type="submit" value="{{ maquinista.nombre_m }}" />Eliminar</button></td>
                 </tr>
               {% endfor %}
             </tbody>
