@@ -411,3 +411,17 @@ def getIsOk():
         return "siMovimiento"
 
     return "noMovimiento"
+
+
+@main.route('/tabletGet/')
+def tabletGet():
+    maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
+
+    context = {
+        'error_maquinista':True,
+        'ok_maquinista':True,
+        'maquinistas':maquinistas
+    }
+
+
+    return render_template('tablet.html',**context)

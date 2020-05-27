@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Quitar un maquinista</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='general.css') }}" rel="stylesheet">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: #add6e8;">
+      <a class="navbar-brand" href="{{ url_for('main.principal') }}">Volver</a>
+    </nav>
+
+    <div class="container">
+      {% if error_maquinista %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        El maquinista <strong>no se encuentra</strong> en el sistema
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      {% if ok_maquinista %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        El maquinista <strong>se ha eliminado</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="container">
+      <div class="general-contenedor">
+        <table class="table table-hover">
+            <thead>
+                <th>Maquinistas</th>
+                <th>Turnos</th>
+                <th>Accion</th>
+            </thead>
+            <tbody>
+              {% for maquinsita in maquinistas %}
+                <td>{{ maquinista.nombre_m }}</td>
+                <td>
+                  <ul>
+                    {% for turno in maquinista.turnos %}
+                      <li>{{ turno.nombre_t }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+                <td><form><input class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" /></form></td>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+
+
+
+
+  </body>
+</html>
