@@ -43,7 +43,7 @@
               <tr>
                 <th scope="col">Maquinistas</th>
                 <th scope="col">Turnos</th>
-                <th> scope="col"Accion</th>
+                <th scope="col">Accion</th>
               </tr>
             </thead>
             <tbody>
@@ -57,7 +57,7 @@
                       {% endfor %}
                     </ul>
                   </td>
-                  <td><form><input class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" /></form></td>
+                  <td><form method="POST" name="botonEliminar" action="{{ url_for('main.tabletPOST') }}"><button class="btn btn-light" type="submit" value="{{ maquinista.nombre_m }}" />Eliminar</button></td>
                 </tr>
               {% endfor %}
             </tbody>
