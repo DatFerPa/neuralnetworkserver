@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user
 import numpy as np
 import tensorflow as tf
 from .extensions import db
-from .models import Maquinista, Turno, turnos, Admin
+from .models import Maquinista, Turno, turnos, Administrador
 import os, fnmatch
 import azure.storage.common
 from azure.storage.common import CloudStorageAccount

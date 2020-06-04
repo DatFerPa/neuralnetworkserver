@@ -2,7 +2,7 @@ import click
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .models import Maquinista, Turno, Admin
+from .models import Maquinista, Turno, Administrador
 
 
 @click.command(name='create_tables')
@@ -21,7 +21,7 @@ def generate_data():
     turno1 = Turno(nombre_t="turno dia", maquina="mc 102023")
     turno2 = Turno(nombre_t="turno noche", maquina="23-405-5")
     turno3 = Turno(nombre_t="turno de explotacion",maquina="455-345-567")
-    admin = Admin(nombre_admin="admin",password_admin="admin")
+    admin = Administrador(nombre_admin="admin",password_admin="admin")
     maq1 = Maquinista(nombre_m="Fer")
     maq2 = Maquinista(nombre_m="Fernando")
     maq1.turnos.append(turno1)
