@@ -1,54 +1,53 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import login_user, logout_user
 import numpy as np
 import tensorflow as tf
 from .extensions import db
-from .models import Maquinista, Turno, turnos
+from .models import Maquinista, Turno, turnos, Admin
 import os, fnmatch
 import azure.storage.common
 from azure.storage.common import CloudStorageAccount
 
-main = Blueprint('main',__name__)
+webRoutes = Blueprint('webRoutes',__name__)
 
-@main.route('/')
+@webRoutes.route('/')
 def principal():
     print("Principal")
-    return render_template('principal.html')
+    context = {
+        'error_login':False
+    }
+    if request.args.get('error_login') is not None:
+        context['error_login'] = True
 
-@main.route('/login/',methods=['POST'])
-def login():
-    nombre = request.form.get('nombre')
-    print(nombre)
-    maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
-    print(maquinista)
-    if maquinista is None:
-        return 'no'
+    return render_template('principal.html',**context)
+
+@webRoutes.route('/loginAdmin/', methods=['POST'])
+def loginAdmin():
+    nombreAdmin = request.form.get('nombreAdmin')
+    passwordAdmin = request.form.get('passwordAdmin')
+
+    admin = Administrador.query.filter_by(nombre_admin=nombreAdmin,password_admin=passwordAdmin).first()
+
+    if admin is None:
+        return redirect(url_for('webRoutes.principal',error_login=True))
     else:
-        return 'si'
+        login_user(admin)
+        return redirect(url_for('webRoutes.dashboardAdmin'))
+
+@webRoutes.route('/logoutAdmin/', methods=['POST'])
+def logoutAdmin():
+    logout_user()
+    return redirect(url_for('webRoutes.principal'))
+
+@webRoutes.route('/dashboardAdmin/')
+@login_required
+def dashboardAdmin():
+    print('dashboardAdmin')
+    return render_template('dashboardAdmin.html')
 
 
-@main.route('/turnos/',methods=['POST'])
-def turnos():
-    nombre = request.form.get('nombre')
-    maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
-    print(maquinista)
-    turnos_de_un_maquinista = []
-    print(maquinista.turnos)
-    for turn in maquinista.turnos:
-        turno_actual = Turno.query.filter_by(id=turn.id).first()
-        turnos_de_un_maquinista.append(turno_actual)
-
-    concatenacion_turnos=""
-    iteracion = len(turnos_de_un_maquinista)
-
-    for n in range(iteracion):
-        concatenacion_turnos = concatenacion_turnos + turnos_de_un_maquinista[n].nombre_t + ";" + turnos_de_un_maquinista[n].maquina
-        if n != (iteracion-1):
-            concatenacion_turnos = concatenacion_turnos + ":"
-
-    return concatenacion_turnos
-
-
-@main.route('/addTurnos/')
+@webRoutes.route('/addTurnos/')
+@login_required
 def addTurnos():
     print('addTurnos')
     context = {
@@ -64,7 +63,8 @@ def addTurnos():
     print(context)
     return render_template('addTurnos.html',**context)
 
-@main.route('/quitTurnos/')
+@webRoutes.route('/quitTurnos/')
+@login_required
 def quitTurnos():
     print('quitTurnos')
     turnos = Turno.query.order_by(Turno.nombre_t).all()
@@ -84,7 +84,8 @@ def quitTurnos():
 
 
 
-@main.route('/addMaquinistas/')
+@webRoutes.route('/addMaquinistas/')
+@login_required
 def addMaquinistas():
     print('addMaquinistas')
     context = {
@@ -100,7 +101,8 @@ def addMaquinistas():
     print(context)
     return render_template('addMaquinista.html',**context)
 
-@main.route('/quitMaquinistas/')
+@webRoutes.route('/quitMaquinistas/')
+@login_required
 def quitMaquinistas():
     print('quitMaquinistas')
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
@@ -118,7 +120,7 @@ def quitMaquinistas():
     print(context)
     return render_template('quitMaquinista.html',**context)
 
-@main.route('/nuevoMaquinista/',methods=['POST'])
+@webRoutes.route('/nuevoMaquinista/',methods=['POST'])
 def nuevoMaquinista():
     print('nuevoMaquinista')
     nombre = request.form.get('nombre')
@@ -128,17 +130,17 @@ def nuevoMaquinista():
         maquinista = Maquinista(nombre_m=nombre)
         db.session.add(maquinista)
         db.session.commit()
-        return redirect(url_for('main.addMaquinistas',ok_maquinista=True))
+        return redirect(url_for('webRoutes.addMaquinistas',ok_maquinista=True))
     else:
-        return redirect(url_for('main.addMaquinistas',error_maquinista=True))
+        return redirect(url_for('webRoutes.addMaquinistas',error_maquinista=True))
 
-@main.route('/quitarMaquinista/',methods=['POST'])
+@webRoutes.route('/quitarMaquinista/',methods=['POST'])
 def quitarMaquinista():
     print('quitarMaquinista')
     nombre = request.form.get('nombre')
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.quitMaquinistas',error_maquinista=True))
+        return redirect(url_for('webRoutes.quitMaquinistas',error_maquinista=True))
     else:
         db.session.delete(maquinista)
         db.session.commit()
@@ -157,10 +159,10 @@ def quitarMaquinista():
             )
             print("--------------------")
 
-        return redirect(url_for('main.quitMaquinistas',ok_maquinista=True))
+        return redirect(url_for('webRoutes.quitMaquinistas',ok_maquinista=True))
 
 
-@main.route('/nuevoTurno/',methods=['POST'])
+@webRoutes.route('/nuevoTurno/',methods=['POST'])
 def nuevoTurno():
     print('nuevoTurno')
     nombreTurno = request.form.get('nombreTurno')
@@ -172,26 +174,27 @@ def nuevoTurno():
         turno = Turno(nombre_t=nombreTurno,maquina=nombreMaquina)
         db.session.add(turno)
         db.session.commit()
-        return redirect(url_for('main.addTurnos',ok_turno=True))
+        return redirect(url_for('webRoutes.addTurnos',ok_turno=True))
     else:
-        return redirect(url_for('main.addTurnos',error_turno=True))
+        return redirect(url_for('webRoutes.addTurnos',error_turno=True))
 
 
-@main.route('/quitarTurno/',methods=['POST'])
+@webRoutes.route('/quitarTurno/',methods=['POST'])
 def quitarTurno():
     print('quitarTurno')
     nombreTurno = request.form.get('nombreTurno')
     turno = Turno.query.filter_by(nombre_t=nombreTurno).first()
     print(turno)
     if turno is None:
-        return redirect(url_for('main.quitTurnos',error_turno=True))
+        return redirect(url_for('webRoutes.quitTurnos',error_turno=True))
     else:
         db.session.delete(turno)
         db.session.commit()
-        return redirect(url_for('main.quitTurnos',ok_turno=True))
+        return redirect(url_for('webRoutes.quitTurnos',ok_turno=True))
 
 
-@main.route('/buscarTurnosMaquinista/')
+@webRoutes.route('/buscarTurnosMaquinista/')
+@login_required
 def buscarTurnosMaquinista():
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
     context = {
@@ -203,14 +206,14 @@ def buscarTurnosMaquinista():
     return render_template('buscarMaquinista.html',**context)
 
 
-@main.route('/listTurnos/',methods=['POST'])
+@webRoutes.route('/listTurnos/',methods=['POST'])
 def listTurnos():
     print("listTurnos")
     nombre = request.form.get('nombre')
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('main.buscarTurnosMaquinista',error_maquinista=True))
+        return redirect(url_for('webRoutes.buscarTurnosMaquinista',error_maquinista=True))
 
     turnos = []
     for turn in maquinista.turnos:
@@ -224,7 +227,8 @@ def listTurnos():
 
     return render_template('listTurnos.html',**context)
 
-@main.route('/gestionTurnos/')
+@webRoutes.route('/gestionTurnos/')
+@login_required
 def gestionTurnos():
     print('gestionTurnos')
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
@@ -241,7 +245,7 @@ def gestionTurnos():
         context['ok_gestion'] = True
     return render_template('gestionTurnos.html',**context)
 
-@main.route('/asignarDenegarTurnos/',methods=['POST'])
+@webRoutes.route('/asignarDenegarTurnos/',methods=['POST'])
 def asignarDenegarTurnos():
     print("asignarDenegarTurnos")
     context = {
@@ -259,17 +263,17 @@ def asignarDenegarTurnos():
     print(maquinista)
     print(turno)
     if maquinista is None and turno is None:
-        return redirect(url_for('main.gestionTurnos',error_gestion=True))
+        return redirect(url_for('webRoutes.gestionTurnos',error_gestion=True))
 
     if gestion == "Asignar":
         print("Asignar")
         for turn in maquinista.turnos:
             if turn.nombre_t == turno.nombre_t:
                 context['error_gestion']:True
-                return redirect(url_for('main.gestionTurnos',error_gestion=True))
+                return redirect(url_for('webRoutes.gestionTurnos',error_gestion=True))
         maquinista.turnos.append(turno)
         db.session.commit()
-        return redirect(url_for('main.gestionTurnos',ok_gestion=True))
+        return redirect(url_for('webRoutes.gestionTurnos',ok_gestion=True))
 
     elif gestion == "Denegar":
         print("Denegar")
@@ -279,16 +283,16 @@ def asignarDenegarTurnos():
             if turn.nombre_t == turno.nombre_t:
                 maquinista.turnos.pop(cont)
                 db.session.commit()
-                return redirect(url_for('main.gestionTurnos',ok_gestion=True))
+                return redirect(url_for('webRoutes.gestionTurnos',ok_gestion=True))
 
             cont += 1
 
-        return redirect(url_for('main.gestionTurnos',error_gestion=True))
+        return redirect(url_for('webRoutes.gestionTurnos',error_gestion=True))
 
     else:
-        return redirect(url_for('main.gestionTurnos',error_gestion=True))
+        return redirect(url_for('webRoutes.gestionTurnos',error_gestion=True))
 
-@main.route('/ficherosTurno/')
+@webRoutes.route('/ficherosTurno/')
 def ficherosTurno():
     print("ficherosTurno")
     maquinistaID = request.args.get('maquinista_arg')
@@ -330,7 +334,7 @@ def ficherosTurno():
 
     return render_template('ficherosTurno.html',**context)
 
-@main.route('/logsTurno/')
+@webRoutes.route('/logsTurno/')
 def logsTurno():
     print("logsTurno")
     nombre = request.args.get('nombre_fichero_arg')
@@ -356,41 +360,8 @@ def logsTurno():
 
 
 
-@main.route('/addLogTurno/',methods=['POST'])
-def addLogTurno():
-    print("addLogTurno")
-    try:
-        nombreMaquinista = request.form.get('nombreMaquinista')
-        nombreTurno = request.form.get('nombreTurno')
-        fecha = request.form.get('fecha')
-        hora = request.form.get('hora')
-        contenido = request.form.get('contenido')
 
-        lista_split = contenido.split(";")
-        texto ="";
-        for i in lista_split:
-            texto = texto+ i + "\n"
-
-
-        STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
-        STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
-
-        account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
-        file_service = account.create_file_service()
-
-        file_service.create_file_from_text(
-        "shareficherosmaquinistas",
-        None,
-        nombreMaquinista+" "+nombreTurno+", Fecha "+fecha+" Hora "+hora+".txt",
-        texto)
-
-    except:
-        return "turnoFalseAdd"
-
-    return "turnoTrueAdd"
-
-
-@main.route('/getIsOk/',methods=['POST'])
+@webRoutes.route('/getIsOk/',methods=['POST'])
 def getIsOk():
     print("getIsOk")
     accel = request.form.get('accel')
@@ -415,7 +386,7 @@ def getIsOk():
     return "noMovimiento"
 
 
-@main.route('/tabletGet/')
+@webRoutes.route('/tabletGet/')
 def tabletGet():
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
 
@@ -435,7 +406,7 @@ def tabletGet():
 
 
 
-@main.route('/tabletPOST/',methods=['POST'])
+@webRoutes.route('/tabletPOST/',methods=['POST'])
 def tabletPOST():
     print("tabletPOST")
     nombreMaquinista = request.form.get('botonEliminar')
@@ -444,7 +415,7 @@ def tabletPOST():
     maquinista = Maquinista.query.filter_by(nombre_m=nombreMaquinista).first()
 
     if maquinista is None:
-        return redirect(url_for('main.tabletGet',error_maquinista=True))
+        return redirect(url_for('webRoutes.tabletGet',error_maquinista=True))
     else:
         db.session.delete(maquinista)
         db.session.commit()
@@ -463,4 +434,4 @@ def tabletPOST():
             )
             print("--------------------")
 
-        return redirect(url_for('main.tabletGet',ok_maquinista=True))
+        return redirect(url_for('webRoutes.tabletGet',ok_maquinista=True))

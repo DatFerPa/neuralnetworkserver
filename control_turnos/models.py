@@ -15,3 +15,8 @@ class Turno(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     nombre_t = db.Column(db.String(50),unique=True,nullable=False)
     maquina = db.Column(db.String(50),unique=True,nullable=False)
+
+class Administrador(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    nombre_admin = db.Column(db.String(50),unique=True,nullable=False)
+    password_admin = db.Column(db.String(50),nullable=False)

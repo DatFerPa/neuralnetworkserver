@@ -9,7 +9,7 @@
   </head>
   <body>
     <nav class="navbar navbar-light" style="background-color: #add6e8;">
-      <a class="navbar-brand" href="{{ url_for('main.buscarTurnosMaquinista') }}">Volver a buscar maquinista</a>
+      <a class="navbar-brand" href="{{ url_for('webRoutes.buscarTurnosMaquinista') }}">Volver a buscar maquinista</a>
     </nav>
 
     {% if (turnos|length) <= 0 %}
@@ -27,7 +27,7 @@
 
         <ul class="list-group">
           {% for turno in turnos %}
-            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('main.ficherosTurno',maquinista_arg=maquinista.id,turno_arg=turno.id) }}"> {{ turno.nombre_t }} </a>  </li>
+            <li class="list-group-item list-group-item-action"> <a href="{{ url_for('webRoutes.ficherosTurno',maquinista_arg=maquinista.id,turno_arg=turno.id) }}"> {{ turno.nombre_t }} </a>  </li>
           {% endfor %}
         </ul>
       </div>

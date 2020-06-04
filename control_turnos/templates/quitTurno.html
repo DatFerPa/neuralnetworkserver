@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav class="navbar navbar-light" style="background-color: #add6e8;">
-      <a class="navbar-brand" href="{{ url_for('main.principal') }}">Volver</a>
+      <a class="navbar-brand" href="{{ url_for('webRoutes.dashboardAdmin') }}">Volver</a>
     </nav>
 
     <div class="container">
@@ -38,7 +38,7 @@
 
     <div class="container">
       <div class="general-contenedor">
-        <form class="form-horizontal"  method="POST" action="{{ url_for('main.quitarTurno') }}">
+        <form class="form-horizontal"  method="POST" action="{{ url_for('webRoutes.quitarTurno') }}">
           <div class="form-group has-danger">
             <label class="col-sm" for="inputNombre"><strong>Nombre del turno:</strong></label>
             <div class="col-sm-5">
