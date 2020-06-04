@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
 import numpy as np
 import tensorflow as tf
-from .extensions import db
-from .models import Maquinista, Turno, turnos, Administrador
+from control_turnos.extensions import db
+from control_turnos.models import Maquinista, Turno, turnos, Administrador
 import os, fnmatch
 import azure.storage.common
 from azure.storage.common import CloudStorageAccount
