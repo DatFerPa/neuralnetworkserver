@@ -17,6 +17,10 @@ def create_app(config_file='settings.py'):
 
     login_manager.login_view = 'webRoutes.principal'
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Admin.query.get(user_id)
+
     app.register_blueprint(androidRoutes)
     app.register_blueprint(webRoutes)
 
