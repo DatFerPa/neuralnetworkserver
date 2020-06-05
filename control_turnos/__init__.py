@@ -21,7 +21,7 @@ def create_app(config_file='settings.py'):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return Administrador.query.get(id = user_id).first()
+        return Administrador.query.get(user_id)
 
     app.register_blueprint(androidRoutes)
     app.register_blueprint(webRoutes)
