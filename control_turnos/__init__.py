@@ -4,6 +4,7 @@ from .commands import create_tables, drop_tables, generate_data
 from .extensions import db, login_manager
 from .routes.androidRoutes import androidRoutes
 from .routes.webRoutes import webRoutes
+from .models import Administrador
 
 
 def create_app(config_file='settings.py'):
@@ -19,7 +20,7 @@ def create_app(config_file='settings.py'):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return Admin.query.get(user_id)
+        return Administrador.query.get(user_id)
 
     app.register_blueprint(androidRoutes)
     app.register_blueprint(webRoutes)
