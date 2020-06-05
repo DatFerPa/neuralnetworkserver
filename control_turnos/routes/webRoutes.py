@@ -34,7 +34,8 @@ def loginAdmin():
         login_user(admin)
         return redirect(url_for('webRoutes.dashboardAdmin'))
 
-@webRoutes.route('/logoutAdmin/', methods=['POST'])
+@webRoutes.route('/logoutAdmin/')
+@login_required
 def logoutAdmin():
     logout_user()
     return redirect(url_for('webRoutes.principal'))
@@ -121,6 +122,7 @@ def quitMaquinistas():
     return render_template('quitMaquinista.html',**context)
 
 @webRoutes.route('/nuevoMaquinista/',methods=['POST'])
+@login_required
 def nuevoMaquinista():
     print('nuevoMaquinista')
     nombre = request.form.get('nombre')
@@ -135,6 +137,7 @@ def nuevoMaquinista():
         return redirect(url_for('webRoutes.addMaquinistas',error_maquinista=True))
 
 @webRoutes.route('/quitarMaquinista/',methods=['POST'])
+@login_required
 def quitarMaquinista():
     print('quitarMaquinista')
     nombre = request.form.get('nombre')
@@ -163,6 +166,7 @@ def quitarMaquinista():
 
 
 @webRoutes.route('/nuevoTurno/',methods=['POST'])
+@login_required
 def nuevoTurno():
     print('nuevoTurno')
     nombreTurno = request.form.get('nombreTurno')
@@ -180,6 +184,7 @@ def nuevoTurno():
 
 
 @webRoutes.route('/quitarTurno/',methods=['POST'])
+@login_required
 def quitarTurno():
     print('quitarTurno')
     nombreTurno = request.form.get('nombreTurno')
@@ -207,6 +212,7 @@ def buscarTurnosMaquinista():
 
 
 @webRoutes.route('/listTurnos/',methods=['POST'])
+@login_required
 def listTurnos():
     print("listTurnos")
     nombre = request.form.get('nombre')
@@ -246,6 +252,7 @@ def gestionTurnos():
     return render_template('gestionTurnos.html',**context)
 
 @webRoutes.route('/asignarDenegarTurnos/',methods=['POST'])
+@login_required
 def asignarDenegarTurnos():
     print("asignarDenegarTurnos")
     context = {
@@ -293,6 +300,7 @@ def asignarDenegarTurnos():
         return redirect(url_for('webRoutes.gestionTurnos',error_gestion=True))
 
 @webRoutes.route('/ficherosTurno/')
+@login_required
 def ficherosTurno():
     print("ficherosTurno")
     maquinistaID = request.args.get('maquinista_arg')
@@ -335,6 +343,7 @@ def ficherosTurno():
     return render_template('ficherosTurno.html',**context)
 
 @webRoutes.route('/logsTurno/')
+@login_required
 def logsTurno():
     print("logsTurno")
     nombre = request.args.get('nombre_fichero_arg')
@@ -357,81 +366,3 @@ def logsTurno():
     }
 
     return render_template('logsTurno.html',**context)
-
-
-
-
-@webRoutes.route('/getIsOk/',methods=['POST'])
-def getIsOk():
-    print("getIsOk")
-    accel = request.form.get('accel')
-    corte_1 = accel.split(":")
-    lista_accel = []
-    for x in corte_1:
-        lista = list(map(float,x.split(";")))
-        lista_accel.append(lista)
-    lista_previa = []
-    lista_previa.append(lista_accel)
-    print(lista_previa)
-    numpy_lista = np.array(lista_previa)
-    modelo = tf.keras.models.load_model('modelo_movimientos')
-    prediccion = modelo.predict(numpy_lista)
-    prediccion_max = np.argmax(prediccion[0])
-    print("Si movimiento: "+prediccion[0][0]+" -  No movimiento: "+prediccion[0][1])
-    print("Prediccion maxima para: "+prediccion_max)
-    #si movimiento 0 no movimiento 1
-    if prediccion_max == 0:
-        return "siMovimiento"
-
-    return "noMovimiento"
-
-
-@webRoutes.route('/tabletGet/')
-def tabletGet():
-    maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
-
-    context = {
-        'error_maquinista':False,
-        'ok_maquinista':False,
-        'maquinistas':maquinistas
-    }
-    if request.args.get('error_maquinista') is not None:
-        context['error_maquinista'] = True
-
-    if request.args.get('ok_maquinista') is not None:
-        context['ok_maquinista'] = True
-
-
-    return render_template('tablet.html',**context)
-
-
-
-@webRoutes.route('/tabletPOST/',methods=['POST'])
-def tabletPOST():
-    print("tabletPOST")
-    nombreMaquinista = request.form.get('botonEliminar')
-    print(nombreMaquinista)
-
-    maquinista = Maquinista.query.filter_by(nombre_m=nombreMaquinista).first()
-
-    if maquinista is None:
-        return redirect(url_for('webRoutes.tabletGet',error_maquinista=True))
-    else:
-        db.session.delete(maquinista)
-        db.session.commit()
-
-        STORAGE_ACCOUNT_NAME = 'ficherosmaquinistas'
-        STORAGE_ACCOUNT_KEY  = 'JKGDYu80C4HWg6DxUyA8mWYouPVAHV9tlB8MO6Xcv5sFKR7KVr+Onw7PLwP7KjMqhdPKTCWFk59NM4m+t/lcGQ=='
-        account = CloudStorageAccount(STORAGE_ACCOUNT_NAME,STORAGE_ACCOUNT_KEY)
-        file_service = account.create_file_service()
-        files = list(file_service.list_directories_and_files('shareficherosmaquinistas',prefix=maquinista.nombre_m))
-        for file in files:
-            print(file.name)
-            file_service.delete_file(
-                "shareficherosmaquinistas",
-                None,
-                file.name
-            )
-            print("--------------------")
-
-        return redirect(url_for('webRoutes.tabletGet',ok_maquinista=True))
