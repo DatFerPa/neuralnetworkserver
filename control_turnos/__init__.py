@@ -1,5 +1,4 @@
 from flask import Flask
-
 from .commands import create_tables, drop_tables, generate_data
 from .extensions import db, login_manager
 from .routes.androidRoutes import androidRoutes
@@ -9,6 +8,8 @@ from .models import Administrador
 
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
+
+    app.secret_key = 'secret_key_que_jamas_se_adivinará_$_¿?'
 
     app.config.from_pyfile(config_file)
 
@@ -20,7 +21,7 @@ def create_app(config_file='settings.py'):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return Administrador.query.get(user_id)
+        return Administrador.query.get(id = user_id).first()
 
     app.register_blueprint(androidRoutes)
     app.register_blueprint(webRoutes)
