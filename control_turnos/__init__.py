@@ -9,11 +9,9 @@ from .models import Administrador
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = 'secret_key_que_jamas_se_adivinará$¿?'
-    app.config['SESSION_TYPE'] = 'filesystem'
-    app.config['SESSION_PERMANENT']= False
-
     app.config.from_pyfile(config_file)
+
+    app.config['SECRET_KEY'] = 'secret_key_que_jamas_se_adivinará$¿?'
 
     db.init_app(app)
 
