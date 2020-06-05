@@ -1,7 +1,7 @@
 from flask import Flask
 
 from .commands import create_tables, drop_tables, generate_data
-from .extensions import db
+from .extensions import db, login_manager
 from .routes.androidRoutes import androidRoutes
 from .routes.webRoutes import webRoutes
 
@@ -12,6 +12,10 @@ def create_app(config_file='settings.py'):
     app.config.from_pyfile(config_file)
 
     db.init_app(app)
+
+    login_manager.init_app(app)
+
+    login_manager.login_view = 'webRoutes.principal'
 
     app.register_blueprint(androidRoutes)
     app.register_blueprint(webRoutes)

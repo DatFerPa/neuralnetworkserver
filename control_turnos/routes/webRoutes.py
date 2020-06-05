@@ -28,7 +28,7 @@ def loginAdmin():
 
     admin = Administrador.query.filter_by(nombre_admin=nombreAdmin,password_admin=passwordAdmin).first()
 
-    if admin is None:
+    if not admin:
         return redirect(url_for('webRoutes.principal',error_login=True))
     else:
         login_user(admin)
