@@ -10,6 +10,7 @@
   <body>
     <nav class="navbar navbar-light" style="background-color: #add6e8;">
       <a class="navbar-brand" href="{{ url_for('webRoutes.buscarTurnosMaquinista') }}">Volver a buscar maquinista</a>
+      <a class="navbar-brand  my-2 my-lg-0" href="{{ url_for('webRoutes.logoutAdmin') }}">Cerrar sesión</a>
     </nav>
 
     {% if (turnos|length) <= 0 %}
