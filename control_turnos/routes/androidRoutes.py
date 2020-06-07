@@ -101,7 +101,7 @@ def addLogTurno():
 @androidRoutes.route('/pushNotificacion/',methods=['POST'])
 def pushNotificacion():
     print("pushNotification")
-    nombreFichero = request.form.get('nombreFichero')
+    nombreFichero ="Fer,turno dia,Fecha 03-06-2020 Hora  12-25-27,emergencia.txt"
     print(nombreFichero)
     nombreFicheroSplit = nombreFichero.split(',')
     print(nombreFicheroSplit)
