@@ -311,7 +311,8 @@ def ficherosTurno():
     print(turno_act.nombre_t)
 
 
-    pattern = maquinista.nombre_m+" "+turno_act.nombre_t
+    pattern = maquinista.nombre_m+","+turno_act.nombre_t
+    print(pattern)
     ficheros_logs = []
     fechas_ficheros = []
 
@@ -329,7 +330,7 @@ def ficherosTurno():
         textos = file.name.split(',')
         print(textos)
         ficheros_logs.append(file.name)
-        valores = textos[1].split('.txt')
+        valores = textos[2].split('.txt')
         print(valores)
         fechas_ficheros.append(valores[0])
         print("---------")
