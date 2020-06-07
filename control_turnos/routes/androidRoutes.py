@@ -55,8 +55,6 @@ def turnos():
 
     return concatenacion_turnos
 
-
-
 @androidRoutes.route('/addLogTurno/',methods=['POST'])
 def addLogTurno():
     print("addLogTurno")
@@ -66,6 +64,14 @@ def addLogTurno():
         fecha = request.form.get('fecha')
         hora = request.form.get('hora')
         contenido = request.form.get('contenido')
+
+        emergencia = request.form.get('emergencia')
+        nombreDelFichero=""
+        if emergencia is None:
+            nombreDelFichero = nombreMaquinista+","+nombreTurno+",Fecha "+fecha+" Hora "+hora+".txt"
+        else:
+            nombreDelFichero = nombreMaquinista+","+nombreTurno+",Fecha "+fecha+" Hora "+hora+",emergencia.txt"
+            pusher_client.trigger('my-channel', 'my-event', {'maquinista': nombreMaquinista,'turno':nombreTurno,'fecha':fecha,'nombreFichero':nombreDelFichero})
 
         lista_split = contenido.split(";")
         texto ="";
@@ -82,7 +88,7 @@ def addLogTurno():
         file_service.create_file_from_text(
         "shareficherosmaquinistas",
         None,
-        nombreMaquinista+" "+nombreTurno+", Fecha "+fecha+" Hora "+hora+".txt",
+        nombreDelFichero,
         texto)
 
     except:
