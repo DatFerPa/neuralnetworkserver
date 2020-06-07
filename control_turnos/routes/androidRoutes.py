@@ -97,11 +97,10 @@ def pushNotificacion():
 
     nombreFichero = request.form.get('nombreFichero')
     nombreFicheroSplit = nombreFichero.split(',')
-    nombre_y_turno = nombreFicheroSplit[0].split(',')
-    nombre = nombre_y_turno[0]
-    turno = nombre_y_turno[1] + " "
-    fecha = nombreFicheroSplit[1]
-    emergencia = nombreFicheroSplit[2].replace('.txt','')
+    nombre = nombreFicheroSplit[0]
+    turno = nombreFicheroSplit[1] + " "
+    fecha = nombreFicheroSplit[2]
+    emergencia = nombreFicheroSplit[3].replace('.txt','')
     pusher_client.trigger('my-channel', 'my-event', {'maquinista': nombre,'turno':turno,'fecha':fecha,'nombreFichero':nombreFichero})
 
     return 'Notificacion realizada'
