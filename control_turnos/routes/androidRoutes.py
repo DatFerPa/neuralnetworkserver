@@ -10,6 +10,18 @@ from azure.storage.common import CloudStorageAccount
 
 androidRoutes = Blueprint('androidRoutes',__name__)
 
+
+import pusher
+
+pusher_client = pusher.Pusher(
+  app_id='1014550',
+  key='33da5fe2d909596436d5',
+  secret='015d1e8981ad3a6a0e3b',
+  cluster='eu',
+  ssl=True
+)
+
+
 @androidRoutes.route('/login/',methods=['POST'])
 def login():
     nombre = request.form.get('nombre')
@@ -77,3 +89,19 @@ def addLogTurno():
         return "turnoFalseAdd"
 
     return "turnoTrueAdd"
+
+
+
+@androidRoutes.route('/pushNotificacion/',methods=['POST'])
+def pushNotificacion():
+
+    nombreFichero = request.form.get('nombreFichero')
+    nombreFicheroSplit = nombreFichero.split(',')
+    nombre_y_turno = nombreFicheroSplit[0].split(' ')
+    nombre = nombre_y_turno[0]
+    turno = nombre_y_turno[1]
+    fecha = nombreFicheroSplit[1]
+    emergencia = nombreFicheroSplit[2].replace('.txt','')
+    pusher_client.trigger('my-channel', 'my-event', {'maquinista': nombre,'turno':turno,'fecha':fecha,'nombreFichero':nombreFichero})
+
+    return 'Notificacion realizada'
