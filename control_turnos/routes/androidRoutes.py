@@ -94,11 +94,13 @@ def addLogTurno():
 
 @androidRoutes.route('/pushNotificacion/',methods=['POST'])
 def pushNotificacion():
-
+    print("pushNotification")
     nombreFichero = request.form.get('nombreFichero')
+    print(nombreFichero)
     nombreFicheroSplit = nombreFichero.split(',')
+    print(nombreFicheroSplit)
     nombre = nombreFicheroSplit[0]
-    turno = nombreFicheroSplit[1] + " "
+    turno = nombreFicheroSplit[1]
     fecha = nombreFicheroSplit[2]
     emergencia = nombreFicheroSplit[3].replace('.txt','')
     pusher_client.trigger('my-channel', 'my-event', {'maquinista': nombre,'turno':turno,'fecha':fecha,'nombreFichero':nombreFichero})
