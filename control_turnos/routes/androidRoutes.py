@@ -98,7 +98,7 @@ def addLogTurno():
 
 
 
-@androidRoutes.route('/pushNotificacion/',methods=['POST'])
+@androidRoutes.route('/pushNotificacion/',methods=['GET','POST'])
 def pushNotificacion():
     print("pushNotification")
     nombreFichero ="Fer,turno dia,Fecha 03-06-2020 Hora  12-25-27,emergencia.txt"
