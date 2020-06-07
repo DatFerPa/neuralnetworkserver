@@ -9,7 +9,7 @@ var pusher = new Pusher('33da5fe2d909596436d5', {
     //data.turno
      //alert(JSON.stringify(data));
      let identificador = "alert" + Date.now();
-     $(".container").append("<div class=\"alert alert-secondary alert-dismissible fade show\" role=\"alert\"> Un maquinista ha tenido un accidente   <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
+     $(".container").prepend("<div class=\"alert alert-secondary alert-dismissible fade show\" role=\"alert\"> <h4 class=\"alert-heading\"> Un maquinista ha tenido un accidente </h4>   <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
 
 
    });
