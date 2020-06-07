@@ -1,8 +1,8 @@
-var pusher = new Pusher('33da5fe2d909596436d5', {
+let pusher = new Pusher('33da5fe2d909596436d5', {
      cluster: 'eu'
    });
 
-   var channel = pusher.subscribe('my-channel');
+   let channel = pusher.subscribe('my-channel');
    channel.bind('my-event', function(data) {
     //Crear el Toast de bootstrap
     //data.maquinista
