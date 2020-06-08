@@ -15,7 +15,7 @@ class Maquinista(db.Model):
 class Turno(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     nombre_t = db.Column(db.String(50),unique=True,nullable=False)
-    maquina = db.Column(db.String(50),unique=True,nullable=False)
+    maquina = db.Column(db.String(50),nullable=False)
 
 class Administrador(UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key=True)
