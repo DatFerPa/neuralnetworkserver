@@ -8,7 +8,7 @@
 
     <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
     <script src="{{ url_for('static', filename='registerPusher.js') }}"></script>
-    
+
     <link href="{{ url_for('static', filename='general.css') }}" rel="stylesheet">
 
   </head>
@@ -48,14 +48,14 @@
           <div class="form-group has-danger">
             <label class="col-sm" for="nombreTurno"><strong>Nombre del turno:</strong></label>
             <div class="col-sm-5">
-              <input id="nombreTurno" class="form-control " name="nombreTurno" type="text" placeholder="Nombre del turno" required/>
+              <input id="nombreTurno" pattern="[A-Za-z-_0-9][A-Za-z-_0-9 ]*" class="form-control " name="nombreTurno" type="text" placeholder="Nombre del turno" required/>
             </div>
           </div>
 
           <div class="form-group has-danger">
             <label class="col-sm" for="nombreMaquina"><strong>Nombre de la maquina:</strong></label>
             <div class="col-sm-5">
-              <input id="nombreMaquina" class="form-control " name="nombreMaquina" type="text" placeholder="Nombre de la maquina" required/>
+              <input id="nombreMaquina" pattern="[A-Za-z-_0-9][A-Za-z-_0-9 ]*" class="form-control " name="nombreMaquina" type="text" placeholder="Nombre de la maquina" required/>
             </div>
           </div>
 
