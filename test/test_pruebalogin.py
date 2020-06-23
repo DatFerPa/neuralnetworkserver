@@ -10,23 +10,16 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-import os
-
-class TestPruebalogincorrecta():
+class TestPruebalogin():
   def setup_method(self, method):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    self.driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    self.driver = webdriver.Chrome()
     self.vars = {}
 
   def teardown_method(self, method):
     self.driver.quit()
 
-  def test_pruebalogincorrecta(self):
-    # Test name: prueba login correcta
+  def test_pruebalogin(self):
+    # Test name: prueba_login_2
     # Step # | name | target | value
     # 1 | open | / |
     self.driver.get("https://servidorhombremuerto.herokuapp.com/")
@@ -40,5 +33,13 @@ class TestPruebalogincorrecta():
     self.driver.find_element(By.ID, "passwordAdmin").send_keys("admin")
     # 6 | click | css=.btn |
     self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
-    # 7 | assertText | css=html | Cerrar sesión\nBuscar turnos de un maquinista\nCrear maquinista\nQuitar maquinista\nCrear turno\nQuitar turno\nGestión de turnos
-    assert self.driver.find_element(By.CSS_SELECTOR, "html").text == "Cerrar sesión\\\\nBuscar turnos de un maquinista\\\\nCrear maquinista\\\\nQuitar maquinista\\\\nCrear turno\\\\nQuitar turno\\\\nGestión de turnos"
+    # 7 | click | css=html |
+    self.driver.find_element(By.CSS_SELECTOR, "html").click()
+    # 8 | click | css=html |
+    self.driver.find_element(By.CSS_SELECTOR, "html").click()
+    # 9 | click | linkText=Cerrar sesión |
+    self.driver.find_element(By.LINK_TEXT, "Cerrar sesión").click()
+    # 10 | assertTitle | Iniciar sesion de administrador |
+    assert self.driver.title == "Iniciar sesion de administrador"
+    # 11 | assertTitle | Panel de control |
+    assert self.driver.title == "Panel de control"
