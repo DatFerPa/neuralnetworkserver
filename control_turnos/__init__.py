@@ -10,7 +10,6 @@ def create_app(config_file='settings.py'):
     app = Flask(__name__)
 
     app.config.from_pyfile(config_file)
-
     app.config['SECRET_KEY'] = 'secret_key_que_jamas_se_adivinará$¿?'
 
     db.init_app(app)
