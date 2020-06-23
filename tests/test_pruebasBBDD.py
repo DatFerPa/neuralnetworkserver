@@ -1,10 +1,30 @@
-import pytest
-from flask.cli import with_appcontext
 from control_turnos.extensions import db
 from control_turnos.models import Maquinista, Turno, Administrador
 
-@with_appcontext
-def test_operations_maquinista():
+
+import os
+import tempfile
+
+import pytest
+
+from control_turnos import control_turnos
+
+@pytest.fixture
+def client():
+    db_fd, control_turnos.app.config['DATABASE'] = tempfile.mkstemp()
+    control_turnos.app.config['TESTING'] = True
+
+    with control_turnos.app.test_client() as client:
+        with control_turnos.app.app_context():
+            control_turnos.init_db()
+        yield client
+
+    os.close(db_fd)
+    os.unlink(control_turnos.app.config['DATABASE'])
+
+
+
+def test_operations_maquinista(client):
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
     db.session.add(maquinsta_prueba)
     maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
@@ -14,8 +34,8 @@ def test_operations_maquinista():
     maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
     assert maquinista is None
 
-@with_appcontext
-def test_operations_turno():
+
+def test_operations_turno(client):
     turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
     db.session.add(turno_prueba)
     turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
@@ -26,8 +46,8 @@ def test_operations_turno():
     turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
     assert turno is None
 
-@with_appcontext
-def test_operations_asign_unasign():
+
+def test_operations_asign_unasign(client):
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
     turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
     db.session.add(turno_prueba)
