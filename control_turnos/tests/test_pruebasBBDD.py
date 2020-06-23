@@ -1,6 +1,6 @@
 import pytest
-from .extensions import db
-from .models import Maquinista, Turno, Administrador
+from control_turnos.extensions import db
+from control_turnos.models import Maquinista, Turno, Administrador
 
 def test_operations_maquinista():
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
@@ -34,5 +34,3 @@ def test_operations_asign_unasign():
     maquinista.turnos.append(turno)
     maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
     assert len(maquinista.turnos) > 0
-
-    
