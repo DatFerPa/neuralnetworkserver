@@ -5,9 +5,6 @@ from .extensions import db
 from .models import Maquinista, Turno, Administrador
 import tests.test_pruebasBBDD
 
-@click.command(name='create_tables')
-@with_appcontext
-
 
 @click.command(name='create_tables')
 @with_appcontext
