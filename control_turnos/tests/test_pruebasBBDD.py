@@ -2,6 +2,7 @@ import pytest
 from control_turnos.extensions import db
 from control_turnos.models import Maquinista, Turno, Administrador
 
+@with_appcontext
 def test_operations_maquinista():
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
     db.session.add(maquinsta_prueba)
@@ -12,7 +13,7 @@ def test_operations_maquinista():
     maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
     assert maquinista is None
 
-
+@with_appcontext
 def test_operations_turno():
     turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
     db.session.add(turno_prueba)
@@ -23,7 +24,8 @@ def test_operations_turno():
     db.session.delete(turno)
     turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
     assert turno is None
-
+    
+@with_appcontext
 def test_operations_asign_unasign():
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
     turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
