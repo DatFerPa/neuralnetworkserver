@@ -3,7 +3,7 @@ from flask.cli import with_appcontext
 
 from .extensions import db
 from .models import Maquinista, Turno, Administrador
-from .tests.test_pruebasBBDD import test_operations_maquinista, test_operations_turno
+from tests.test_pruebasBBDD import *
 
 @click.command(name="make_tests")
 @with_appcontext
