@@ -1,4 +1,5 @@
 import pytest
+from flask.cli import with_appcontext
 from control_turnos.extensions import db
 from control_turnos.models import Maquinista, Turno, Administrador
 
@@ -24,7 +25,7 @@ def test_operations_turno():
     db.session.delete(turno)
     turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
     assert turno is None
-    
+
 @with_appcontext
 def test_operations_asign_unasign():
     maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
