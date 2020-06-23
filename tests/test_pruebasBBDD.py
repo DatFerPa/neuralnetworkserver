@@ -20,6 +20,7 @@ def test_operations_maquinista():
 
 def test_operations_turno():
     print('operaciones con los turnos')
+    try:
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_prueba)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
