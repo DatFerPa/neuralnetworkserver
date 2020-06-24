@@ -12,7 +12,7 @@ def test_operations_maquinista():
         assert maquinista.nombre_m == "Maquinista1"
         db.session.delete(maquinista)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is None
+        assert maquinista is not None
     except AssertionError as error:
         print('Fallo en el Test operaciones con los maquinistas')
         print(error)
