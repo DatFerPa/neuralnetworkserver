@@ -198,9 +198,9 @@ def quitarTurno():
         return redirect(url_for('webRoutes.quitTurnos',ok_turno=True))
 
 
-@webRoutes.route('/buscarTurnosMaquinista/')
+@webRoutes.route('/buscarRegistrosMaquinista/')
 @login_required
-def buscarTurnosMaquinista():
+def buscarRegistrosMaquinista():
     maquinistas = Maquinista.query.order_by(Maquinista.nombre_m).all()
     context = {
         'maquinistas':maquinistas,
@@ -219,7 +219,7 @@ def listTurnos():
     print(nombre)
     maquinista = Maquinista.query.filter_by(nombre_m=nombre).first()
     if maquinista is None:
-        return redirect(url_for('webRoutes.buscarTurnosMaquinista',error_maquinista=True))
+        return redirect(url_for('webRoutes.buscarRegistrosMaquinista',error_maquinista=True))
 
     turnos = []
     for turn in maquinista.turnos:
