@@ -24,11 +24,10 @@ def test_operaciones_negativas_maquinista():
         maquinista_1 = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinista_1)
         try:
-            maquinista_2 = Maquinista(nombre_m="maquinista1")
+            maquinista_2 = Maquinista(nombre_m="Maquinista1")
             db.session.add(maquinista_2)
-        except Exception as e:
+        except Exception:
             print("Maquinista repetido no se ha añadido")
-            print(e)
         maquinistas = Maquinista.query.filter_by(nombre_m="Maquinista1").all()
         assert len(maquinistas) == 1, "Se ha añadido más de un maquinista con el mismo nombre"
         print('Exito en operaciones negativas con los maquinsitas')
@@ -61,9 +60,8 @@ def test_operaciones_negativas_turno():
         turno_2 = Turno(nombre_t="Turno1",maquina="Maquina1")
         try:
             db.session.add(turno_2)
-        except Exception as e:
+        except Exception:
             print("Turno repetido no se ha añadido")
-            print(e)
         turnos = Turno.query.filter_by(nombre_t="Turno1").all()
         assert len(turnos) == 1,"Se ha añadido más de un turno con el mismo nombre"
         print('Exito en operaciones negativas con los turnos')
