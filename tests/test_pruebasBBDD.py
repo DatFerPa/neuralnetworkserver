@@ -3,7 +3,7 @@ from control_turnos.models import Maquinista, Turno, Administrador
 
 
 def test_operations_maquinista():
-    print('operaciones con los maquinistas')
+    print('Operaciones con los maquinistas')
     try:
         maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinsta_prueba)
@@ -13,12 +13,13 @@ def test_operations_maquinista():
         db.session.delete(maquinista)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         assert maquinista is not None
+        print('Exito en operaciones con los maquinistas')
     except AssertionError as error:
         print('Fallo en el Test operaciones con los maquinistas')
         print(error)
 
 def test_operaciones_negativas_maquinista():
-    print('operaciones negativas con los maquinsitas')
+    print('Operaciones negativas con los maquinsitas')
     try:
         maquinista_1 = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinista_1)
@@ -26,12 +27,13 @@ def test_operaciones_negativas_maquinista():
         db.session.add(maquinista_2)
         maquinistas = Maquinista.query.filter_by(nombre_m="Maquinista1").all()
         assert len(maquinistas) == 1
+        print('Exito en operaciones negativas con los maquinsitas')
     except AssertionError as error:
         print('Fallo en el Test operaciones negativas con los maquinistas')
         print(error)
 
 def test_operations_turno():
-    print('operaciones con los turnos')
+    print('Operaciones con los turnos')
     try:
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_prueba)
@@ -42,12 +44,13 @@ def test_operations_turno():
         db.session.delete(turno)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
         assert turno is None
+        print('Exito en operaciones con los turnos')
     except AssertionError as error:
         print('Fallo en el Test operaciones con los turnos')
         print(error)
 
 def test_operaciones_negativas_turno():
-    print('operaciones negativas con los turnos')
+    print('Operaciones negativas con los turnos')
     try:
         turno_1 = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_1)
@@ -55,27 +58,31 @@ def test_operaciones_negativas_turno():
         dab.session.add(turno_2)
         turnos = Turno.query.filter_by(nombre_t="Turno1").all()
         assert len(turnos) == 1
+        print('Exito en operaciones negativas con los turnos')
     except AssertionError as error:
         print('Fallo en el Test operaciones negativas con los turnos')
 
 
 def test_operations_asign_unasign():
-    maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
-    turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
-    db.session.add(turno_prueba)
-    db.session.add(maquinsta_prueba)
-    maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-    tunro = Turno.query.filter_by(nombre_t="Turno1").first()
-    maquinista.turnos.append(turno)
-    maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-    #append
-    assert len(maquinista.turnos) > 0
-    maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-    cont = 0
-    for turn in maquinista.turnos:
-        if turn.nombre_t == "Turno1":
-            maquinista.turnos.pop(cont)
-        cont += 1
-    assert len(maquinista.turnos) == 0
+    print('Operaciones negativas con los turnos')
+    try:
+        maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
+        turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
+        db.session.add(turno_prueba)
+        db.session.add(maquinsta_prueba)
+        maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+        tunro = Turno.query.filter_by(nombre_t="Turno1").first()
+        maquinista.turnos.append(turno)
+        maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+        #append
+        assert len(maquinista.turnos) > 0
+        maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+        cont = 0
+        for turn in maquinista.turnos:
+            if turn.nombre_t == "Turno1":
+                maquinista.turnos.pop(cont)
+            cont += 1
+        assert len(maquinista.turnos) == 0
+        print('Existo en operaciones negativas con los turnos')
     except AssertionError as error:
         print('Fallo en el Test de operaciones asignar y desasignar')
