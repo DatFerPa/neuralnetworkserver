@@ -12,7 +12,7 @@ def test_operations_maquinista():
         assert maquinista.nombre_m == "Maquinista1", "Información del maquinsita incorrecta"
         db.session.delete(maquinista)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is not None,"El maquinista no se ha eliminado adecuadamente"
+        assert maquinista is None,"El maquinista no se ha eliminado adecuadamente"
         print('Exito en operaciones con los maquinistas')
     except AssertionError as error:
         print('Fallo en el Test operaciones con los maquinistas')
@@ -23,8 +23,11 @@ def test_operaciones_negativas_maquinista():
     try:
         maquinista_1 = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinista_1)
-        maquinista_2 = Maquinista(nombre_m="maquinista1")
-        db.session.add(maquinista_2)
+        try:
+            maquinista_2 = Maquinista(nombre_m="maquinista1")
+            db.session.add(maquinista_2)
+        except:
+            print("Maquinista repetido no se ha añadido")
         maquinistas = Maquinista.query.filter_by(nombre_m="Maquinista1").all()
         assert len(maquinistas) == 1, "Se ha añadido más de un maquinista con el mismo nombre"
         print('Exito en operaciones negativas con los maquinsitas')
@@ -55,7 +58,10 @@ def test_operaciones_negativas_turno():
         turno_1 = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_1)
         turno_2 = Turno(nombre_t="Turno1",maquina="Maquina1")
-        db.session.add(turno_2)
+        try:
+            db.session.add(turno_2)
+        except:
+            print("Turno repetido no se ha añadido")
         turnos = Turno.query.filter_by(nombre_t="Turno1").all()
         assert len(turnos) == 1,"Se ha añadido más de un turno con el mismo nombre"
         print('Exito en operaciones negativas con los turnos')
