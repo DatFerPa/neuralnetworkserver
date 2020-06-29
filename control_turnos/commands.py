@@ -9,7 +9,10 @@ from tests.test_pruebasBBDD import *
 @with_appcontext
 def make_tests():
     test_operations_maquinista()
+    test_operaciones_negativas_maquinista()
     test_operations_turno()
+    test_operaciones_negativas_turno()
+    test_operations_asign_unasign()
 
 @click.command(name='create_tables')
 @with_appcontext
