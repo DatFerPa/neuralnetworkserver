@@ -8,11 +8,11 @@ def test_operations_maquinista():
         maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinsta_prueba)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is not None
-        assert maquinista.nombre_m == "Maquinista1"
+        assert maquinista is not None, "El maquinista no se ha añadido correctamente"
+        assert maquinista.nombre_m == "Maquinista1", "Información del maquinsita incorrecta"
         db.session.delete(maquinista)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is not None
+        assert maquinista is not None,"El maquinista no se ha eliminado adecuadamente"
         print('Exito en operaciones con los maquinistas')
     except AssertionError as error:
         print('Fallo en el Test operaciones con los maquinistas')
@@ -26,7 +26,7 @@ def test_operaciones_negativas_maquinista():
         maquinista_2 = Maquinista(nombre_m="maquinista1")
         db.session.add(maquinista_2)
         maquinistas = Maquinista.query.filter_by(nombre_m="Maquinista1").all()
-        assert len(maquinistas) == 1
+        assert len(maquinistas) == 1, "Se ha añadido más de un maquinista con el mismo nombre"
         print('Exito en operaciones negativas con los maquinsitas')
     except AssertionError as error:
         print('Fallo en el Test operaciones negativas con los maquinistas')
@@ -38,12 +38,12 @@ def test_operations_turno():
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_prueba)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
-        assert turno is not None
-        assert turno.nombre_t == "Turno1"
-        assert turno.maquina == "Maquina1"
+        assert turno is not None, "Turno no se ha añadido corerctamente"
+        assert turno.nombre_t == "Turno1", "Información del turno no es correcta"
+        assert turno.maquina == "Maquina1", "Información del turno no es correcta"
         db.session.delete(turno)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
-        assert turno is None
+        assert turno is None,"No se ha eliminado el turno corectamente"
         print('Exito en operaciones con los turnos')
     except AssertionError as error:
         print('Fallo en el Test operaciones con los turnos')
@@ -55,16 +55,16 @@ def test_operaciones_negativas_turno():
         turno_1 = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_1)
         turno_2 = Turno(nombre_t="Turno1",maquina="Maquina1")
-        dab.session.add(turno_2)
+        db.session.add(turno_2)
         turnos = Turno.query.filter_by(nombre_t="Turno1").all()
-        assert len(turnos) == 1
+        assert len(turnos) == 1,"Se ha añadido más de un turno con el mismo nombre"
         print('Exito en operaciones negativas con los turnos')
     except AssertionError as error:
         print('Fallo en el Test operaciones negativas con los turnos')
 
 
 def test_operations_asign_unasign():
-    print('Operaciones negativas con los turnos')
+    print('Operaciones asignar y desasignar')
     try:
         maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
@@ -75,14 +75,14 @@ def test_operations_asign_unasign():
         maquinista.turnos.append(turno)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         #append
-        assert len(maquinista.turnos) > 0
+        assert len(maquinista.turnos) > 0 , "Turno no se ha asignado correctamente"
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         cont = 0
         for turn in maquinista.turnos:
             if turn.nombre_t == "Turno1":
                 maquinista.turnos.pop(cont)
             cont += 1
-        assert len(maquinista.turnos) == 0
-        print('Existo en operaciones negativas con los turnos')
+        assert len(maquinista.turnos) == 0 , "Turno no se ha desasignado correctamente"
+        print('Existo en operaciones asignar y desasignar')
     except AssertionError as error:
         print('Fallo en el Test de operaciones asignar y desasignar')
