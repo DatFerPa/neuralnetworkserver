@@ -81,7 +81,7 @@ def test_operations_asign_unasign():
         db.session.add(turno_prueba)
         db.session.add(maquinsta_prueba)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        tunro = Turno.query.filter_by(nombre_t="Turno1").first()
+        turno = Turno.query.filter_by(nombre_t="Turno1").first()
         maquinista.turnos.append(turno)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         #append
