@@ -16,7 +16,7 @@ class PruebasAdmin(BaseTestClass):
     def test_add_maquinista(self):
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
         res = self.client.post('/nuevoMaquinista/',data=dict(nombre="Maquinista1"),follow_redirects=True)
-        self.assertIn(b'se ha añadido',res.data)
+        self.assertIn(b'se ha',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
             self.assertEqual(maquinista.nombre_m,"Maquinista1")
@@ -79,7 +79,7 @@ class PruebasAdmin(BaseTestClass):
     def test_quit_maquinista(self):
         with self.app.app_context():
             maquinista = Maquinista(nombre_m="Maquinista1")
-            db.session.add(maquinsta_prueba)
+            db.session.add(maquinista)
             db.session.commit()
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
         res = self.client.post('/quitarMaquinista/',data=dict(nombre="Maquinista1"),follow_redirects=True)
@@ -106,7 +106,7 @@ class PruebasAdmin(BaseTestClass):
     def test_quit_turno(self):
         with self.app.app_context():
             turno = Turno(nombre_t="Turno1",maquina="Maquina1")
-            db.session.add(turno_prueba)
+            db.session.add(turno)
             db.session.commit()
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
         res = self.client.post('/quitarTurno/',data=dict(nombreTurno="Turno1"),follow_redirects=True)
@@ -128,16 +128,61 @@ class PruebasAdmin(BaseTestClass):
             self.assertEqual(turno,None)
         self.client.get('/logoutAdmin/')
 
+    def test_enlazar_desenlazar(self):
+        with self.app.app_context():
+            maquinista = Maquinista(nombre_m="Maquinista1")
+            turno = Turno(nombre_t="Turno1",maquina="Maquina1")
+            db.session.add(maquinista)
+            db.session.add(turno)
+            db.session.commit()
+        self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
+        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="Maquinista1",nombreTurno="Maquina1",gestion="Asignar"),follow_redirects=True)
+        self.assertIn(b'Se ha podido realizar la',res.data)
+        with self.app.app_context():
+            maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+            self.assertEqual(len(maquinista.turnos),1)
+            turno = Turno.query.filter_by(nombre_t="Turno1").first()
+            self.assertEqual(len(turno.maquinistas),1)
+        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="Maquinista1",nombreTurno="Maquina1",gestion="Denegar"),follow_redirects=True)
+        self.assertIn(b'Se ha podido realizar la',res.data)
+        with self.app.app_context():
+            maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+            self.assertEqual(len(maquinista.turnos),0)
+            turno = Turno.query.filter_by(nombre_t="Turno1").first()
+            self.assertEqual(len(turno.maquinistas),0)
+            db.session.delete(maquinista)
+            db.session.delete(turno)
+            db.session.commit()
+        self.client.get('/logoutAdmin/')
 
-
-
-
-
-
-
-
-
-
+    def test_enlazar_desenlazar_mal(self):
+        with self.app.app_context():
+            maquinista = Maquinista(nombre_m="Maquinista1")
+            turno = Turno(nombre_t="Turno1",maquina="Maquina1")
+            db.session.add(maquinista)
+            db.session.add(turno)
+            db.session.commit()
+        self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
+        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="Maquinista1",nombreTurno="Maquina1",gestion="Denegar"),follow_redirects=True)
+        self.assertIn(b'Revise si los datos son correctos',res.data)
+        with self.app.app_context():
+            maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+            self.assertEqual(len(maquinista.turnos),0)
+            turno = Turno.query.filter_by(nombre_t="Turno1").first()
+            self.assertEqual(len(turno.maquinistas),0)
+            maquinista.turnos.append(turno)
+            db.session.commit()
+        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="Maquinista1",nombreTurno="Maquina1",gestion="Asignar"),follow_redirects=True)
+        self.assertIn(b'Revise si los datos son correctos',res.data)
+        with self.app.app_context():
+            maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+            self.assertEqual(len(maquinista.turnos),1)
+            turno = Turno.query.filter_by(nombre_t="Turno1").first()
+            self.assertEqual(len(turno.maquinistas),1)
+            db.session.delete(maquinista)
+            db.session.delete(turno)
+            db.session.commit()
+        self.client.get('/logoutAdmin/')
 
 
 
