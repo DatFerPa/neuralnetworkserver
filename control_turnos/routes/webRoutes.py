@@ -251,10 +251,10 @@ def gestionTurnos():
         context['ok_gestion'] = True
     return render_template('gestionTurnos.html',**context)
 
-@webRoutes.route('/asignarDenegarTurnos/',methods=['POST'])
+@webRoutes.route('/asignarDesasignarTurnos/',methods=['POST'])
 @login_required
-def asignarDenegarTurnos():
-    print("asignarDenegarTurnos")
+def asignarDesasignarTurnos():
+    print("asignarDesasignarTurnos")
     context = {
         'error_gestion':False,
         'ok_gestion':False
@@ -282,8 +282,8 @@ def asignarDenegarTurnos():
         db.session.commit()
         return redirect(url_for('webRoutes.gestionTurnos',ok_gestion=True))
 
-    elif gestion == "Denegar":
-        print("Denegar")
+    elif gestion == "Desasignar":
+        print("Desasignar")
         cont = 0
         for turn in maquinista.turnos:
             print(turn.nombre_t)

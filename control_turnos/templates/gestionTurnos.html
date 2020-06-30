@@ -47,7 +47,7 @@
 
     <div class="container">
       <div class="general-contenedor">
-        <form class="form-horizontal"  method="POST" action="{{ url_for('webRoutes.asignarDenegarTurnos') }}">
+        <form class="form-horizontal"  method="POST" action="{{ url_for('webRoutes.asignarDesasignarTurnos') }}">
           <div class="form-group">
             <label class="col-sm" for="nombreMaquinista">Nombre del maquinista:</label>
             <div class="col-sm-5">
@@ -71,7 +71,7 @@
 
           <div class="form_group">
             <input class="btn btn-light" name="botonGestion" type="submit" value="Asignar" />
-            <input class="btn btn-light" name="botonGestion" type="submit" value="Denegar" />
+            <input class="btn btn-light" name="botonGestion" type="submit" value="Desasignar" />
           </div>
         </form>
       </div>

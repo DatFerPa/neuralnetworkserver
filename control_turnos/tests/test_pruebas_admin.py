@@ -137,14 +137,14 @@ class PruebasAdmin(BaseTestClass):
             db.session.add(turno)
             db.session.commit()
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
-        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="TurnoTRECE",botonGestion="Asignar"),follow_redirects=True)
+        res = self.client.post('/asignarDesasignarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="TurnoTRECE",botonGestion="Asignar"),follow_redirects=True)
         self.assertIn(b'Se ha podido realizar la',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="MaquinistaTRECE").first()
             self.assertEqual(len(maquinista.turnos),1)
             turno = Turno.query.filter_by(nombre_t="TurnoTRECE").first()
             self.assertEqual(len(turno.maquinistas),1)
-        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="TurnoTRECE",botonGestion="Denegar"),follow_redirects=True)
+        res = self.client.post('/asignarDesasignarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="TurnoTRECE",botonGestion="Desasignar"),follow_redirects=True)
         self.assertIn(b'Se ha podido realizar la',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="MaquinistaTRECE").first()
@@ -164,7 +164,7 @@ class PruebasAdmin(BaseTestClass):
             db.session.add(turno)
             db.session.commit()
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
-        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaCATORCE",nombreTurno="TurnoCATORCE",botonGestion="Denegar"),follow_redirects=True)
+        res = self.client.post('/asignarDesasignarTurnos/',data=dict(nombreMaquinista="MaquinistaCATORCE",nombreTurno="TurnoCATORCE",botonGestion="Desasignar"),follow_redirects=True)
         self.assertIn(b'Revise si los datos son correctos',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="MaquinistaCATORCE").first()
@@ -173,7 +173,7 @@ class PruebasAdmin(BaseTestClass):
             self.assertEqual(len(turno.maquinistas),0)
             maquinista.turnos.append(turno)
             db.session.commit()
-        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaCATORCE",nombreTurno="TurnoCATORCE",botonGestion="Asignar"),follow_redirects=True)
+        res = self.client.post('/asignarDesasignarTurnos/',data=dict(nombreMaquinista="MaquinistaCATORCE",nombreTurno="TurnoCATORCE",botonGestion="Asignar"),follow_redirects=True)
         self.assertIn(b'Revise si los datos son correctos',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="MaquinistaCATORCE").first()
