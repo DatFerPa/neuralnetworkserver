@@ -80,3 +80,7 @@ class PruebasBBDD(BaseTestClass):
             cont += 1
         self.assertEqual(len(maquinista.turnos),0)
         print('Existo en operaciones asignar y desasignar')
+
+
+if __name__ == '__main__':
+    unittest.main()
