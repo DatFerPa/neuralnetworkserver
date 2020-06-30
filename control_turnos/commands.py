@@ -3,6 +3,7 @@ from flask.cli import with_appcontext
 
 from .extensions import db
 from .models import Maquinista, Turno, Administrador
+"""
 from tests.test_pruebasBBDD import *
 
 @click.command(name="make_tests")
@@ -13,7 +14,7 @@ def make_tests():
     test_operations_turno()
     test_operaciones_negativas_turno()
     test_operations_asign_unasign()
-
+"""
 @click.command(name='create_tables')
 @with_appcontext
 def create_tables():
