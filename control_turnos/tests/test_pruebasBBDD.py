@@ -1,26 +1,21 @@
 from control_turnos.extensions import db
 from control_turnos.models import Maquinista, Turno, Administrador
-
-
-def test_operations_maquinista():
-    print('Operaciones con los maquinistas')
-    try:
+from . import BaseTestClass
+import unittest
+class PruebasBBDD(BaseTestClass):
+    def test_operations_maquinista(self):
+        print('Operaciones con los maquinistas')
         maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinsta_prueba)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is not None, "El maquinista no se ha añadido correctamente"
-        assert maquinista.nombre_m == "Maquinista1", "Información del maquinsita incorrecta"
+        self.assertEqual(maquinista.nombre_m,"Maquinista1")
         db.session.delete(maquinista)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
-        assert maquinista is None,"El maquinista no se ha eliminado adecuadamente"
+        self.assertEqual(maquinista.nombre_m,None)
         print('Exito en operaciones con los maquinistas')
-    except AssertionError as error:
-        print('Fallo en el Test operaciones con los maquinistas')
-        print(error)
 
-def test_operaciones_negativas_maquinista():
-    print('Operaciones negativas con los maquinsitas')
-    try:
+    def test_operaciones_negativas_maquinista(self):
+        print('Operaciones negativas con los maquinsitas')
         maquinista_1 = Maquinista(nombre_m="Maquinista1")
         db.session.add(maquinista_1)
         try:
@@ -31,32 +26,26 @@ def test_operaciones_negativas_maquinista():
             db.session.rollback()
             print("Maquinista repetido no se ha añadido")
         maquinistas = Maquinista.query.filter_by(nombre_m="Maquinista1").all()
-        assert len(maquinistas) == 1, "Se ha añadido más de un maquinista con el mismo nombre"
+        self.assertEqual(len(maquinistas),1)
         print('Exito en operaciones negativas con los maquinsitas')
-    except AssertionError as error:
-        print('Fallo en el Test operaciones negativas con los maquinistas')
-        print(error)
 
-def test_operations_turno():
-    print('Operaciones con los turnos')
-    try:
+
+    def test_operations_turno(self):
+        print('Operaciones con los turnos')
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_prueba)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
-        assert turno is not None, "Turno no se ha añadido corerctamente"
-        assert turno.nombre_t == "Turno1", "Información del turno no es correcta"
-        assert turno.maquina == "Maquina1", "Información del turno no es correcta"
+        self.assertEqual(turno,not None)
+        self.assertEqual(turno.maquina,"Maquina1")
+        self.assertEqual(turno.nombre_t,"Turno1")
         db.session.delete(turno)
         turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
         assert turno is None,"No se ha eliminado el turno corectamente"
         print('Exito en operaciones con los turnos')
-    except AssertionError as error:
-        print('Fallo en el Test operaciones con los turnos')
-        print(error)
 
-def test_operaciones_negativas_turno():
-    print('Operaciones negativas con los turnos')
-    try:
+
+    def test_operaciones_negativas_turno(self):
+        print('Operaciones negativas con los turnos')
         turno_1 = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_1)
         turno_2 = Turno(nombre_t="Turno1",maquina="Maquina1")
@@ -67,15 +56,12 @@ def test_operaciones_negativas_turno():
             db.session.rollback()
             print("Turno repetido no se ha añadido")
         turnos = Turno.query.filter_by(nombre_t="Turno1").all()
-        assert len(turnos) == 1,"Se ha añadido más de un turno con el mismo nombre"
+        self.assertEqual(len(turnos),1)
         print('Exito en operaciones negativas con los turnos')
-    except AssertionError as error:
-        print('Fallo en el Test operaciones negativas con los turnos')
 
 
-def test_operations_asign_unasign():
-    print('Operaciones asignar y desasignar')
-    try:
+    def test_operations_asign_unasign(self):
+        print('Operaciones asignar y desasignar')
         maquinsta_prueba = Maquinista(nombre_m="Maquinista1")
         turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
         db.session.add(turno_prueba)
@@ -85,14 +71,12 @@ def test_operations_asign_unasign():
         maquinista.turnos.append(turno)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         #append
-        assert len(maquinista.turnos) > 0 , "Turno no se ha asignado correctamente"
+        self.assertGreater(len(maquinista.turnos),0)
         maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
         cont = 0
         for turn in maquinista.turnos:
             if turn.nombre_t == "Turno1":
                 maquinista.turnos.pop(cont)
             cont += 1
-        assert len(maquinista.turnos) == 0 , "Turno no se ha desasignado correctamente"
+        self.assertEqual(len(maquinista.turnos),0)
         print('Existo en operaciones asignar y desasignar')
-    except AssertionError as error:
-        print('Fallo en el Test de operaciones asignar y desasignar')
