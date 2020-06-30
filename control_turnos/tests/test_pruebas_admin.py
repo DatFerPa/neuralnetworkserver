@@ -137,7 +137,7 @@ class PruebasAdmin(BaseTestClass):
             db.session.add(turno)
             db.session.commit()
         self.client.post('/loginAdmin/',data=dict(nombreAdmin="admin",passwordAdmin="admin"),follow_redirects=True)
-        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="Maquina13",gestion="Asignar"),follow_redirects=True)
+        res = self.client.post('/asignarDenegarTurnos/',data=dict(nombreMaquinista="MaquinistaTRECE",nombreTurno="TurnoTRECE",gestion="Asignar"),follow_redirects=True)
         self.assertIn(b'Se ha podido realizar la',res.data)
         with self.app.app_context():
             maquinista = Maquinista.query.filter_by(nombre_m="MaquinistaTRECE").first()

@@ -23,10 +23,9 @@ class PruebasBBDD(BaseTestClass):
             self.assertEqual(turno.maquina,"Maquina1")
             self.assertEqual(turno.nombre_t,"TurnoDOS")
             db.session.delete(turno)
+            db.session.commit()
             turno = Turno.query.filter_by(nombre_t="TurnoDOS",maquina="Maquina1").first()
             self.assertEqual(turno, None)
-            db.session.delete(turno)
-            db.session.commit()
 
 
     def test_operations_asign_unasign(self):
