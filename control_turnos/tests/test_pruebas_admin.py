@@ -49,14 +49,15 @@ class PruebasAdmin(BaseTestClass):
             turno2 = Turno.query.filter_by(nombre_t="Turno2",maquina="Maquina1").first()
             self.assertEqual(turno.nombre_t,"Turno1")
             self.assertEqual(turno.maquina,"Maquina1")
-            self.assertEqual(turno.nombre_t,"Turno2")
-            self.assertEqual(turno.maquina,"Maquina1")
+            self.assertEqual(turno2.nombre_t,"Turno2")
+            self.assertEqual(turno2.maquina,"Maquina1")
             db.session.delete(turno)
             db.session.delete(turno2)
             db.session.commit()
             turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
             turno2 = Turno.query.filter_by(nombre_t="Turno2",maquina="Maquina1").first()
             self.assertEqual(turno,None)
+            self.assertEqual(turno2,None)
 
         self.client.get('/logoutAdmin/')
 

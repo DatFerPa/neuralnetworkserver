@@ -12,7 +12,7 @@ class PruebasBBDD(BaseTestClass):
             db.session.delete(maquinista)
             maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
             self.assertEqual(maquinista,None)
-
+            db.session.commit()
 
     def test_operations_turno(self):
         with self.app.app_context():
@@ -25,6 +25,8 @@ class PruebasBBDD(BaseTestClass):
             db.session.delete(turno)
             turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
             self.assertEqual(turno, None)
+            db.session.delete(turno)
+            db.session.commit()
 
 
     def test_operations_asign_unasign(self):
@@ -33,6 +35,7 @@ class PruebasBBDD(BaseTestClass):
             turno_prueba = Turno(nombre_t="Turno1",maquina="Maquina1")
             db.session.add(turno_prueba)
             db.session.add(maquinsta_prueba)
+            db.session.commit()
             maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
             turno = Turno.query.filter_by(nombre_t="Turno1").first()
             maquinista.turnos.append(turno)
@@ -46,6 +49,11 @@ class PruebasBBDD(BaseTestClass):
                     maquinista.turnos.pop(cont)
                 cont += 1
             self.assertEqual(len(maquinista.turnos),0)
+            maquinista = Maquinista.query.filter_by(nombre_m="Maquinista1").first()
+            turno = Turno.query.filter_by(nombre_t="Turno1",maquina="Maquina1").first()
+            db.session.delete(maquinista)
+            db.session.delete(turno)
+            db.session.commit()
 
 
 if __name__ == '__main__':
