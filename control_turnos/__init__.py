@@ -1,5 +1,6 @@
 from flask import Flask
-from .commands import create_tables, drop_tables, generate_data, make_tests
+#from .commands import create_tables, drop_tables, generate_data, make_tests
+from .commands import create_tables, drop_tables, generate_data
 from .extensions import db, login_manager
 from .routes.androidRoutes import androidRoutes
 from .routes.webRoutes import webRoutes
@@ -29,6 +30,6 @@ def create_app(config_file='settings.py'):
     app.cli.add_command(create_tables)
     app.cli.add_command(drop_tables)
     app.cli.add_command(generate_data)
-    app.cli.add_command(make_tests)
+    #app.cli.add_command(make_tests)
 
     return app
