@@ -1,6 +1,7 @@
 import unittest
-
-
+from control_turnos import create_app
+from control_turnos.extensions import db
+from control_turnos.models import Maquinista, Turno, Administrador
 
 
 class BaseTestClass(unittest.TestCase):
