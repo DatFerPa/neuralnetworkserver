@@ -40,7 +40,7 @@
       <div class="general-contenedor">
         <ul class="list-group">
         {% for i in range(ficheros_logs|length) %}
-          <li class="list-group-item list-group-item-action"> <a href="{{ url_for('webRoutes.logsTurno',nombre_fichero_arg=ficheros_logs[i],nombre_turno_arg=nombre_turno,fecha_fichero_arg=fechas_ficheros) }}"> {{ fechas_ficheros[i] }} </a>  </li>
+          <li class="list-group-item list-group-item-action"> <a href="{{ url_for('webRoutes.logsTurno',nombre_fichero_arg=ficheros_logs[i],nombre_turno_arg=nombre_turno,fecha_fichero_arg=fechas_ficheros[i]) }}"> {{ fechas_ficheros[i] }} </a>  </li>
         {% endfor %}
         </ul>
       </div>
